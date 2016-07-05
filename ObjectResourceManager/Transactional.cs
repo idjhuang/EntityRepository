@@ -13,11 +13,13 @@ namespace ObjectResourceManager
         private T _temporaryValue;
         private readonly List<Transaction> _transactionList = new List<Transaction>();
         private ReaderWriterLockSlim ReaderWriterLock { get; }
+        protected bool IsDirty;
 
         public Transactional(T value)
         {
             ReaderWriterLock = new ReaderWriterLockSlim();
             _value = value;
+            IsDirty = false;
         }
 
         public Transactional(Transactional<T> transactional) : this(transactional.Value)
@@ -49,7 +51,7 @@ namespace ObjectResourceManager
             enlistment.Done();
         }
 
-        void IEnlistmentNotification.Prepare(PreparingEnlistment preparingEnlistment)
+        public virtual void Prepare(PreparingEnlistment preparingEnlistment)
         {
             preparingEnlistment.Prepared();
         }
@@ -120,6 +122,7 @@ namespace ObjectResourceManager
         private void SetValue(T t)
         {
             Lock(true);
+            IsDirty = true;
             if (Transaction.Current == null)
             {
                 _value = t;
@@ -132,29 +135,37 @@ namespace ObjectResourceManager
             }
         }
 
-        private T GetValue()
+        public T GetValue(LockMode lockMode = LockMode.Normal)
         {
             if (Transaction.Current == null)
             {
-                Unlock(false);
-                return _value;
+                switch (lockMode)
+                {
+                    case LockMode.NoLock:
+                        return _temporaryValue;
+                    case LockMode.Normal:
+                        Lock(false);
+                        Unlock(false);
+                        return _value;
+                    case LockMode.Exclusive:
+                        Lock(true);
+                        Unlock(true);
+                        return _value;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
-            if (Transaction.Current.IsolationLevel == IsolationLevel.ReadUncommitted) return _value;
-            Lock(Transaction.Current.IsolationLevel == IsolationLevel.Serializable);
+            if ((Transaction.Current.IsolationLevel == IsolationLevel.ReadUncommitted && lockMode != LockMode.Exclusive) ||
+                (lockMode == LockMode.NoLock)) return _temporaryValue;
+            Lock(Transaction.Current.IsolationLevel == IsolationLevel.Serializable || lockMode == LockMode.Exclusive);
             Enlist(_value);
             return _temporaryValue;
         }
 
         public T Value
         {
-            get
-            {
-                return GetValue();
-            }
-            set
-            {
-                SetValue(value);
-            }
+            get { return GetValue(); }
+            set { SetValue(value); }
         }
 
         public static implicit operator T(Transactional<T> transactional)

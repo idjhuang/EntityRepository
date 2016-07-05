@@ -45,6 +45,7 @@
     <Compile Include="IObject.cs" />
     <Compile Include="IReference.cs" />
     <Compile Include="ICollection.cs" />
+    <Compile Include="TransactionalObject.cs" />
     <Compile Include="ObjectBase.cs" />
     <Compile Include="ObjectList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

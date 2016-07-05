@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using ObjectRepositoryContract;
 using ObjectResourceManager;
 using IsolationLevel = System.Transactions.IsolationLevel;
 
@@ -18,7 +20,7 @@ namespace Test
     public partial class TestForm : Form
     {
         private readonly Transactional<Value> _obj = new Transactional<Value>(new Value()); 
-        private Transactional<int> _value = new Transactional<int>(); 
+        private Transactional<int> _value = new Transactional<int>();
 
         public TestForm()
         {
@@ -26,6 +28,25 @@ namespace Test
         }
 
         private void startBtn_Click(object sender, EventArgs e)
+        {
+            Test1();
+        }
+
+        public static T Cast<T>(T obj) where T : class
+        {
+            var type = obj.GetType();
+            return Activator.CreateInstance(type) as T;
+        }
+
+        private void Test1()
+        {
+            var c1 = new C1(111) {S1 = "C1"};
+            MessageBox.Show(JsonConvert.SerializeObject(c1), "Cl");
+            var drived = new TransactionalObject<Drived>(new Drived("Drived", 123) {P1 = 456, P2 = "Test"});
+            MessageBox.Show(JsonConvert.SerializeObject(drived, new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Serialize}), "Original");
+        }
+
+        private void TestTransaction()
         {
             _obj.Value.IntValue = 1;
             _obj.Value.StrValue = "ready to test!";
@@ -36,10 +57,10 @@ namespace Test
             var thread1 = new Thread(Task1);
             thread1.Start();
             MessageBox.Show($"Value: {_obj.Value.IntValue}, {_obj.Value.StrValue}", "Main");
-            using (var ts = new TransactionScope(TransactionScopeOption.Required, 
-                new TransactionOptions {IsolationLevel = IsolationLevel.ReadCommitted, Timeout = new TimeSpan(1,0,0,0)}))
+            using (var ts = new TransactionScope(TransactionScopeOption.Required,
+                new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted, Timeout = new TimeSpan(1, 0, 0, 0) }))
             {
-                MessageBox.Show($"Value: {_obj.Value.IntValue}, {_obj.Value.StrValue}" , "Main");
+                MessageBox.Show($"Value: {_obj.Value.IntValue}, {_obj.Value.StrValue}", "Main");
                 MessageBox.Show("Ready to write", "Main");
                 _obj.Value.IntValue = 2;
                 _obj.Value.StrValue = "test";
