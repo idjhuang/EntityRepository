@@ -1,21 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using IDesign.System.Collections.Transactional;
 
 namespace ObjectRepositoryContract
 {
-    public class ObjectList<T> : IReference, IList<T> where T:IObject
+    public class ObjectList<T> : IReference, IList<TransactionalObject<T>> where T:ObjectBase
     {
-        private TransactionalList<T> _list;
+        private TransactionalList<TransactionalObject<T>> _list;
 
         public ObjectList()
         {
-            _list = new TransactionalList<T>();
+            _list = new TransactionalList<TransactionalObject<T>>();
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<TransactionalObject<T>> GetEnumerator()
         {
             return _list.GetEnumerator();
         }
@@ -25,7 +24,7 @@ namespace ObjectRepositoryContract
             return GetEnumerator();
         }
 
-        public void Add(T item)
+        public void Add(TransactionalObject<T> item)
         {
             _list.Add(item);
         }
@@ -35,17 +34,17 @@ namespace ObjectRepositoryContract
             _list.Clear();
         }
 
-        public bool Contains(T item)
+        public bool Contains(TransactionalObject<T> item)
         {
             return _list.Contains(item);
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(TransactionalObject<T>[] array, int arrayIndex)
         {
             _list.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(T item)
+        public bool Remove(TransactionalObject<T> item)
         {
             return _list.Remove(item);
         }
@@ -53,12 +52,12 @@ namespace ObjectRepositoryContract
         public int Count => _list.Count;
         public bool IsReadOnly => false;
 
-        public int IndexOf(T item)
+        public int IndexOf(TransactionalObject<T> item)
         {
             return _list.IndexOf(item);
         }
 
-        public void Insert(int index, T item)
+        public void Insert(int index, TransactionalObject<T> item)
         {
             _list.Insert(index, item);
         }
@@ -68,7 +67,7 @@ namespace ObjectRepositoryContract
             _list.RemoveAt(index);
         }
 
-        public T this[int index]
+        public TransactionalObject<T> this[int index]
         {
             get { return _list[index]; }
             set { _list[index] = value; }
@@ -78,8 +77,12 @@ namespace ObjectRepositoryContract
         internal void OnSerializing(StreamingContext context)
         {
             // replace list element to simple object to store type and id
-            var list = _list.Select(obj => new ObjectBase(obj.Type, obj.Id)).Cast<T>().ToList();
-            _list = new TransactionalList<T>(list);
+            var list = new TransactionalList<TransactionalObject<T>>();
+            foreach (var obj in _list)
+            {
+                list.Add(new TransactionalObject<T>(new ObjectBase(obj.Value.Type, obj.Value.Id) as T));
+            }
+            _list = list;
         }
 
         [OnDeserialized]
@@ -92,8 +95,12 @@ namespace ObjectRepositoryContract
         public void SetReference()
         {
             // set all elements to object form collection by object id
-            var list = _list.Select(obj => (T)CollectionRepository.GetCollection(obj.Type).GetObject(obj.Id)).ToList();
-            _list = new TransactionalList<T>(list);
+            var list = new TransactionalList<TransactionalObject<T>>();
+            foreach (var obj in _list)
+            {
+                list.Add(new TransactionalObject<T>(CollectionRepository.GetCollection(obj.Value.Type).GetObject(obj.Value.Id) as T));
+            }
+            _list = list;
         }
     }
 }

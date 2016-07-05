@@ -98,7 +98,7 @@ namespace ObjectResourceManager
         private void Unlock(bool writeLock)
         {
             if (writeLock && ReaderWriterLock.IsWriteLockHeld) ReaderWriterLock.ExitWriteLock();
-            if (!writeLock && ReaderWriterLock.IsReadLockHeld) ReaderWriterLock.EnterReadLock();
+            if (!writeLock && ReaderWriterLock.IsReadLockHeld) ReaderWriterLock.ExitReadLock();
         }
 
         private void Lock(bool writeLock)
