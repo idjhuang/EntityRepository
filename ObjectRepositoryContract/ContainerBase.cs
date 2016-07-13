@@ -2,7 +2,7 @@
 
 namespace ObjectRepositoryContract
 {
-    public class ContainerBase: ObjectBase, IReference
+    public class ContainerBase: ObjectValue, IReference
     {
         [OnSerializing]
         internal void OnSerializing(StreamingContext context)
@@ -14,7 +14,7 @@ namespace ObjectRepositoryContract
             {
                 if (!propertyInfo.PropertyType.IsSubclassOf(typeof (IObject))) continue;
                 var target = (IObject)propertyInfo.GetValue(this);
-                propertyInfo.SetValue(this, new ObjectBase(target.Type, target.Id));
+                propertyInfo.SetValue(this, new ObjectValue(target.Type, target.Id));
             }
         }
 

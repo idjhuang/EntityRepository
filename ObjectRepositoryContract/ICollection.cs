@@ -2,10 +2,10 @@
 {
     public interface ICollection
     {
-        IObject GetObject(object id);
-        IObject CreateObject(string type);
-        void UpdateObject(IObject obj);
-        void RemoveObject(IObject obj);
+        object GetObject(object id);
+        void InsertObject(object obj);
+        void UpdateObject(object obj);
+        void DeleteObject(object obj);
         void RegisterReference(IReference reference);
     }
 }

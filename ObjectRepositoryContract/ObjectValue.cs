@@ -4,17 +4,15 @@ using System.Configuration;
 namespace ObjectRepositoryContract
 {
     [Serializable]
-    public class ObjectBase : IObject
+    public class ObjectValue : IObject
     {
-        public ObjectBase(string type, object id, bool loaded = true)
+        public ObjectValue(string type, object id)
         {
             Type = type;
             Id = id;
-            Loaded = loaded;
         }
 
         public string Type { get; }
         public object Id { get; }
-        public bool Loaded { get; }
     }
 }
