@@ -5,18 +5,11 @@ using ObjectResourceManager;
 
 namespace ObjectRepositoryContract
 {
-    public class TransactionalObject<T> : Transactional<T>, ISerializable where T:ObjectValue
+    public class TransactionalObject<T> : Transactional<T>, ISerializable where T:Object
     {
-        public static object CreateTransactionalObject(Type type, ObjectValue value)
-        {
-            var targetType = typeof (TransactionalObject<>).MakeGenericType(type);
-            var args = new object[] {value};
-            return Activator.CreateInstance(targetType, args);
-        } 
-
         public TransactionalObject(T value): base(value) { }
 
-        public TransactionalObject(ObjectValue value): base(value as T) { } 
+        public TransactionalObject(Object value): base(value as T) { } 
 
         public TransactionalObject(SerializationInfo info, StreamingContext context)
         {
@@ -30,8 +23,19 @@ namespace ObjectRepositoryContract
 
         public override void Prepare(PreparingEnlistment preparingEnlistment)
         {
-            CollectionRepository.GetCollection(Value.Type).UpdateObject(this);
+            CollectionRepository.GetCollection(typeof(T)).UpdateObject(this);
             base.Prepare(preparingEnlistment);
+        }
+    }
+
+    public static class TransactionalObject
+    {
+        public static object CreateTransactionalObject(Type type, Object value)
+        {
+            var targetType = typeof(TransactionalObject<>).MakeGenericType(type);
+            var args = new object[] { value };
+            var taretObj = Activator.CreateInstance(targetType, args);
+            return taretObj;
         }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace ObjectRepositoryContract
 {
-    public class ObjectReference<T> : ISerializable, IReference where T:ObjectValue
+    public class ObjectReference<T> : ISerializable, IReference where T:Object
     {
         private TransactionalObject<T> _reference;
-        private ObjectValue _target;
+        private Object _target;
         private bool _loaded = true;
 
         public ObjectReference(TransactionalObject<T> reference = null)
@@ -15,7 +15,7 @@ namespace ObjectRepositoryContract
 
         public ObjectReference(SerializationInfo info, StreamingContext context)
         {
-            _target = (ObjectValue)info.GetValue("Reference", typeof(ObjectValue));
+            _target = (Object)info.GetValue("Reference", typeof(Object));
             _loaded = false;
         }
 
@@ -28,7 +28,7 @@ namespace ObjectRepositoryContract
         public void SetReference()
         {
             _reference =
-                CollectionRepository.GetCollection(_target.Type).GetObject(_target.Id) as
+                CollectionRepository.GetCollection(typeof(T)).GetObject(_target.Id) as
                     TransactionalObject<T>;
             _target = null;
             _loaded = true;
@@ -36,8 +36,8 @@ namespace ObjectRepositoryContract
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            var reference = new ObjectValue(_reference.Value.Type, _reference.Value.Id);
-            info.AddValue("Reference", reference, typeof(ObjectValue));
+            var reference = new Object(_reference.Value.Id);
+            info.AddValue("Reference", reference, typeof(Object));
         }
     }
 }

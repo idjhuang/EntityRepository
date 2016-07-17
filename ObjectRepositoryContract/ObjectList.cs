@@ -8,10 +8,10 @@ using Newtonsoft.Json;
 namespace ObjectRepositoryContract
 {
     [JsonConverter(typeof(ObjectListConveter))]
-    public class ObjectList<T> : IReference, ISerializable, IList<TransactionalObject<T>> where T: ObjectValue //
+    public class ObjectList<T> : IReference, ISerializable, IList<TransactionalObject<T>> where T: Object
     {
         internal List<TransactionalObject<T>> List;
-        internal List<ObjectValue> TargetList; 
+        internal List<Object> TargetList; 
         internal bool Loaded = true;
 
         public ObjectList()
@@ -22,7 +22,7 @@ namespace ObjectRepositoryContract
         public ObjectList(SerializationInfo info, StreamingContext context)
         {
             List = new List<TransactionalObject<T>>();
-            TargetList = (List<ObjectValue>)info.GetValue("List", typeof(List<ObjectValue>));
+            TargetList = (List<Object>)info.GetValue("List", typeof(List<Object>));
             Loaded = false;
         }
 
@@ -100,7 +100,7 @@ namespace ObjectRepositoryContract
             List = new TransactionalList<TransactionalObject<T>>();
             foreach (var target in TargetList)
             {
-                List.Add(CollectionRepository.GetCollection(target.Type).GetObject(target.Id) as TransactionalObject<T>);
+                List.Add(CollectionRepository.GetCollection(typeof(T)).GetObject(target.Id) as TransactionalObject<T>);
             }
             TargetList = null;
             Loaded = true;
@@ -108,8 +108,8 @@ namespace ObjectRepositoryContract
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            var list = List.Select(obj => new ObjectValue(obj.Value.Type, obj.Value.Id)).ToList();
-            info.AddValue("List", list, typeof(List<ObjectValue>));
+            var list = List.Select(obj => new Object(obj.Value.Id)).ToList();
+            info.AddValue("List", list, typeof(List<Object>));
         }
     }
 }

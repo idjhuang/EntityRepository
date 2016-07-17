@@ -1,35 +1,57 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ObjectRepositoryContract
 {
-    public class CollectionRepository
+    public static class CollectionRepository
     {
-        private static Dictionary<string, ICollection> Collections { get; set; }
-        private static readonly System.Collections.Generic.List<IReference> _references = new System.Collections.Generic.List<IReference>();
+        private static readonly Dictionary<Type, ICollection> Collections = new Dictionary<Type, ICollection>();
+        private static readonly List<IReference> References = new List<IReference>();
 
-        public static void SetCollections(Dictionary<string, ICollection> collections)
+        static CollectionRepository()
         {
-            Collections = collections;
+            // load all entity modules
+            TypeRepository.LoadModules(typeof (Object));
+            // load all collection modules
+            var collectionTypes = TypeRepository.LoadModules(typeof (ICollection));
+            foreach (var collection in from collectionType in collectionTypes where collectionType.IsClass select Activator.CreateInstance(collectionType))
+            {
+                AddCollection(collection as ICollection);
+            }
         }
 
-        public static ICollection GetCollection(string type)
+        public static void Init()
+        {
+            // explict init the CollectionRepository
+        }
+
+        public static void AddCollection(ICollection collection)
+        {
+            foreach (var type in collection.SupportedTypes())
+            {
+                Collections.Add(type, collection);
+            }
+        }
+
+        public static ICollection GetCollection(Type type)
         {
             // return default collection implementation when type not found in collection table
-            return Collections.ContainsKey(type) ? Collections[type] : Collections[""];
+            return Collections.ContainsKey(type) ? Collections[type] : Collections[typeof(Object)];
         }
 
         public static void RegisterReference(IReference reference)
         {
-            _references.Add(reference);
+            References.Add(reference);
         }
 
         public static void SetReferences()
         {
-            foreach (var reference in _references)
+            foreach (var reference in References)
             {
                 reference.SetReference();
             }
-            _references.Clear();
+            References.Clear();
         }
     }
 }

@@ -5,9 +5,9 @@ using ObjectRepositoryContract;
 namespace Test
 {
     [Serializable]
-    public class Drived : ObjectValue
+    public class Drived : ObjectRepositoryContract.Object
     {
-        public Drived(string type, int id) : base(type, id)
+        public Drived(int id) : base(id)
         {
         }
 
@@ -16,27 +16,27 @@ namespace Test
     }
 
     [Serializable]
-    public class C1 : ObjectValue
+    public class C1 : ObjectRepositoryContract.Object
     {
-        public C1(string type, Guid id) : base(type, id) { }
+        public C1(Guid id) : base(id) { }
 
         public int I1 { get; set; }
         public string S1 { get; set; }
     }
 
     [Serializable]
-    public class C2 : ObjectValue
+    public class C2 : ObjectRepositoryContract.Object
     {
-        public C2(string type, object id) : base(type, id) { }
+        public C2(Guid id) : base(id) { }
 
         public ObjectReference<C1> C1Reference;
         public string S2 { get; set; }
     }
 
     [Serializable]
-    public class C3 : ObjectValue
+    public class C3 : ObjectRepositoryContract.Object
     {
-        public C3(string type, object id) : base(type, id) { }
+        public C3(Guid id) : base(id) { }
         public ObjectList<C1> C1List;
     }
 }
