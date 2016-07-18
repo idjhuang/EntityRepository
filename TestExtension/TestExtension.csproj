@@ -7,8 +7,8 @@
     <ProjectGuid>{A98FD296-6F03-460D-92A3-C485369A6C83}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TestData</RootNamespace>
-    <AssemblyName>TestData</AssemblyName>
+    <RootNamespace>TestExtension</RootNamespace>
+    <AssemblyName>TestExtension</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model.cs" />
+    <Compile Include="Models.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

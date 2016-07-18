@@ -54,7 +54,7 @@ namespace ObjectRepositoryImpl
             }
             catch (Exception e)
             {
-                _log.WriteEntry($"Retrieve object failure ({guid}): {e.Message}");
+                _log.WriteEntry($"Retrieve object failure ({guid}): {e.Message}", EventLogEntryType.Error);
                 throw;
             }
         }
@@ -83,7 +83,7 @@ namespace ObjectRepositoryImpl
             }
             catch (Exception e)
             {
-                _log.WriteEntry($"Insert object failure ({guid}): {e.Message}");
+                _log.WriteEntry($"Insert object failure ({guid}): {e.Message}", EventLogEntryType.Error);
                 throw;
             }
         }
@@ -114,7 +114,7 @@ namespace ObjectRepositoryImpl
             }
             catch (Exception e)
             {
-                _log.WriteEntry($"Update object failure ({guid}): {e.Message}");
+                _log.WriteEntry($"Update object failure ({guid}): {e.Message}", EventLogEntryType.Error);
                 throw;
             }
         }
@@ -140,7 +140,7 @@ namespace ObjectRepositoryImpl
             }
             catch (Exception e)
             {
-                _log.WriteEntry($"Delete object failure ({guid}): {e.Message}");
+                _log.WriteEntry($"Delete object failure ({guid}): {e.Message}", EventLogEntryType.Error);
                 throw;
             }
         }
@@ -174,7 +174,7 @@ namespace ObjectRepositoryImpl
             }
             catch (Exception e)
             {
-                _log.WriteEntry($"Get types failure: {e.Message}");
+                _log.WriteEntry($"Get types failure: {e.Message}", EventLogEntryType.Error);
                 throw;
             }
         }
@@ -208,7 +208,7 @@ namespace ObjectRepositoryImpl
             }
             catch (Exception e)
             {
-                _log.WriteEntry($"Get all objects of type {type} failure: {e.Message}");
+                _log.WriteEntry($"Get all objects of type {type} failure: {e.Message}", EventLogEntryType.Error);
                 throw;
             }
         }

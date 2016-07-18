@@ -15,24 +15,24 @@ namespace ObjectRepositoryContract
 
         static TypeRepository()
         {
-            var log = new EventLog("Application", ".", "ObjectRepository");
-            //var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+        }
+
+        public static void Init()
+        {
+            var log = new EventLog("Application", ".", "Object Repository");
             var assemblies = Properties.Settings.Default.ModuleList;
             foreach (var name in assemblies)
             {
                 try
                 {
-                    //var assembly = loadedAssemblies.FirstOrDefault(a => a.ManifestModule.Name.Equals(dllName));
                     var assembly = Assembly.Load(name);
                     if (assembly != null) Assemblies.Add(assembly);
-
                 }
                 catch (Exception e)
                 {
-                    log.WriteEntry($"Load assembly ({name}) failure: {e.Message}");
+                    log.WriteEntry($"Load assembly ({name}) failure: {e.Message}", EventLogEntryType.Error);
                 }
             }
-
         }
 
         public static IList<Type> LoadModules(Type type)

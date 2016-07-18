@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -15,68 +16,38 @@ using System.Windows.Forms;
 using IDesign.System.Collections.Transactional;
 using Newtonsoft.Json;
 using ObjectRepositoryContract;
-using ObjectRepositoryImpl;
 using ObjectResourceManager;
+using Test;
 using IsolationLevel = System.Transactions.IsolationLevel;
 
-namespace Test
+namespace TestWinForms
 {
     public partial class TestForm : Form
     {
-        private readonly Transactional<Value> _obj = new Transactional<Value>(new Value()); 
-        private Transactional<int> _value = new Transactional<int>();
-        private TransactionalList<Value> _list = new TransactionalList<Value>(); 
-
         public TestForm()
         {
             InitializeComponent();
+            CollectionRepository.Init();
         }
 
         private void startBtn_Click(object sender, EventArgs e)
         {
-            TestInsertObj();
-            TestLoadObj();
+            var testCase = this.testCase.SelectedItem as string;
+            switch (testCase)
+            {
+                case "Insert":
+                    TestCases.InsertObjects();
+                    break;
+                case "Load":
+                    TestCases.LoadObjects();
+                    break;
+                case "Extension":
+                    TestCases.InsertAndLoadExtensionObjects();
+                    break;
+            }
         }
 
-        private void TestInsertObj()
-        {
-            var c1_1 = new TransactionalObject<C1>(new C1(Guid.NewGuid()) { I1 = 100, S1 = "S1_1" });
-            CollectionRepository.GetCollection(typeof(C1)).InsertObject(c1_1);
-            var c1_2 = new TransactionalObject<C1>(new C1(Guid.NewGuid()) { I1 = 200, S1 = "S1_2" });
-            CollectionRepository.GetCollection(typeof(C1)).InsertObject(c1_2);
-            var c1_3 = new TransactionalObject<C1>(new C1(Guid.NewGuid()) { I1 = 300, S1 = "S1_3" });
-            CollectionRepository.GetCollection(typeof(C1)).InsertObject(c1_3);
-
-            var c2 =
-                new TransactionalObject<C2>(new C2(Guid.NewGuid())
-                {
-                    S2 = "S2",
-                    C1Reference = new ObjectReference<C1>(c1_1)
-                });
-            CollectionRepository.GetCollection(typeof(C2)).InsertObject(c2);
-
-            var c3 =
-                new TransactionalObject<C3>(new C3(Guid.NewGuid())
-                {
-                    C1List = new ObjectList<C1>()
-                });
-            c3.Value.C1List.Add(c1_1);
-            c3.Value.C1List.Add(c1_2);
-            c3.Value.C1List.Add(c1_3);
-            CollectionRepository.GetCollection(typeof(C3)).InsertObject(c3);
-        }
-
-        private void TestLoadObj()
-        {
-            var c1List = CollectionRepository.GetCollection(typeof(C1)).GetAllObjects(typeof(C1));
-            var c2List = CollectionRepository.GetCollection(typeof(C2)).GetAllObjects(typeof(C2));
-            var c3List = CollectionRepository.GetCollection(typeof(C3)).GetAllObjects(typeof(C3));
-            var c2 = c2List[0] as TransactionalObject<C2>;
-            var c3 = c3List[0] as TransactionalObject<C3>;
-            MessageBox.Show($"c2.Value.S2:{c2.Value.S2}, c3.Value.C1List[0].Value.S1:{c3.Value.C1List[0].Value.S1}");
-            MessageBox.Show("Done");
-        }
-
+/*
         private void TestList()
         {
             _list.AddRange(new List<Value>{new Value {IntValue = 1, StrValue = "First"}, new Value {IntValue = 2, StrValue = "Second"}});
@@ -137,13 +108,6 @@ namespace Test
                 //ts.Complete();
             }
         }
+*/
     }
-
-    [Serializable]
-    public class Value
-    {
-        public int IntValue { get; set; }
-        public string StrValue { get; set; }
-    }
-
 }

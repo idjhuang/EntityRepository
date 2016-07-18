@@ -1,42 +1,34 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using ObjectRepositoryContract;
 
 namespace Test
 {
     [Serializable]
-    public class Drived : ObjectRepositoryContract.Object
+    public class Simple : ObjectRepositoryContract.Object
     {
-        public Drived(int id) : base(id)
-        {
-        }
+        public Simple(Guid id) : base(id) { }
 
-        public int P1 { get; set; }
-        public string P2 { get; set; }
+        public int IntProperty { get; set; }
+        public string StrProperty { get; set; }
     }
 
     [Serializable]
-    public class C1 : ObjectRepositoryContract.Object
+    public class Container : ObjectRepositoryContract.Object
     {
-        public C1(Guid id) : base(id) { }
+        public Container(Guid id) : base(id) { }
 
-        public int I1 { get; set; }
-        public string S1 { get; set; }
+        public ObjectReference<Simple> SimpleReference;
+        public string StrProperty { get; set; }
     }
 
     [Serializable]
-    public class C2 : ObjectRepositoryContract.Object
+    public class ObjList : ObjectRepositoryContract.Object
     {
-        public C2(Guid id) : base(id) { }
-
-        public ObjectReference<C1> C1Reference;
-        public string S2 { get; set; }
-    }
-
-    [Serializable]
-    public class C3 : ObjectRepositoryContract.Object
-    {
-        public C3(Guid id) : base(id) { }
-        public ObjectList<C1> C1List;
+        public ObjList(Guid id) : base(id) { }
+        public ObjectList<Simple> SimpleList;
+        public int IntProperty { get; set; }
     }
 }

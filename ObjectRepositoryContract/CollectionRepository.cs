@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ObjectRepositoryContract
@@ -11,19 +12,21 @@ namespace ObjectRepositoryContract
 
         static CollectionRepository()
         {
-            // load all entity modules
-            TypeRepository.LoadModules(typeof (Object));
-            // load all collection modules
-            var collectionTypes = TypeRepository.LoadModules(typeof (ICollection));
-            foreach (var collection in from collectionType in collectionTypes where collectionType.IsClass select Activator.CreateInstance(collectionType))
-            {
-                AddCollection(collection as ICollection);
-            }
         }
 
         public static void Init()
         {
             // explict init the CollectionRepository
+            // init type repository
+            TypeRepository.Init();
+            // load all entity modules
+            TypeRepository.LoadModules(typeof(Object));
+            // load all collection modules
+            var collectionTypes = TypeRepository.LoadModules(typeof(ICollection));
+            foreach (var collection in from collectionType in collectionTypes where collectionType.IsClass select Activator.CreateInstance(collectionType))
+            {
+                AddCollection(collection as ICollection);
+            }
         }
 
         public static void AddCollection(ICollection collection)

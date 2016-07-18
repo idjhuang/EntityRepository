@@ -1,4 +1,4 @@
-﻿namespace Test
+﻿namespace TestWinForms
 {
     partial class TestForm
     {
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.startBtn = new System.Windows.Forms.Button();
+            this.testCase = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // startBtn
@@ -37,15 +38,30 @@
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(75, 23);
             this.startBtn.TabIndex = 0;
-            this.startBtn.Text = "Start";
+            this.startBtn.Text = "Run";
             this.startBtn.UseVisualStyleBackColor = true;
             this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
+            // 
+            // testCase
+            // 
+            this.testCase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.testCase.FormattingEnabled = true;
+            this.testCase.Items.AddRange(new object[] {
+            "Insert",
+            "Load",
+            "Extension",
+            "Transaction"});
+            this.testCase.Location = new System.Drawing.Point(13, 14);
+            this.testCase.Name = "testCase";
+            this.testCase.Size = new System.Drawing.Size(178, 20);
+            this.testCase.TabIndex = 1;
             // 
             // TestForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(284, 55);
+            this.Controls.Add(this.testCase);
             this.Controls.Add(this.startBtn);
             this.Name = "TestForm";
             this.Text = "Test";
@@ -56,6 +72,7 @@
         #endregion
 
         private System.Windows.Forms.Button startBtn;
+        private System.Windows.Forms.ComboBox testCase;
     }
 }
 

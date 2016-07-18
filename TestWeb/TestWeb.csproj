@@ -262,6 +262,10 @@
       <Project>{6589be3f-2f40-48be-8633-9df43d0623fa}</Project>
       <Name>ObjectResourceManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Test\Test.csproj">
+      <Project>{5049882f-6a13-4618-80db-65cf5ec8481c}</Project>
+      <Name>Test</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Settings.settings">
