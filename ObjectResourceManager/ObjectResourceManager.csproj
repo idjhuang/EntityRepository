@@ -56,7 +56,6 @@
     <Compile Include="TransactionalSortedDictionary.cs" />
     <Compile Include="TransactionalSortedList.cs" />
     <Compile Include="TransactionalStack.cs" />
-    <Compile Include="TransactionScopeUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

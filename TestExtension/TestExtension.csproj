@@ -43,9 +43,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ObjectRepositoryContract\ObjectRepositoryContract.csproj">
+    <ProjectReference Include="..\EntityRepositoryContract\EntityRepositoryContract.csproj">
       <Project>{8ff8f9f7-aa61-4b39-afd2-3f8292eb7da0}</Project>
-      <Name>ObjectRepositoryContract</Name>
+      <Name>EntityRepositoryContract</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

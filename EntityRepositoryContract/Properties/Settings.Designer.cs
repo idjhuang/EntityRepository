@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ObjectRepositoryImpl.Properties {
+namespace EntityRepositoryContract.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,12 +25,12 @@ namespace ObjectRepositoryImpl.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=JAMESPC;Initial Catalog=ObjectRepository;Persist Security Info=True;U" +
-            "ser ID=sa;Password=James1855")]
-        public string ObjectRepositoryConnectionString {
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
+            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
+            "tring>EntityRepositoryImpl</string>\r\n</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection ModuleList {
             get {
-                return ((string)(this["ObjectRepositoryConnectionString"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["ModuleList"]));
             }
         }
     }

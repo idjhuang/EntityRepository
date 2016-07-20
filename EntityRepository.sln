@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectRepositoryContract", "ObjectRepositoryContract\ObjectRepositoryContract.csproj", "{8FF8F9F7-AA61-4B39-AFD2-3F8292EB7DA0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityRepositoryContract", "EntityRepositoryContract\EntityRepositoryContract.csproj", "{8FF8F9F7-AA61-4B39-AFD2-3F8292EB7DA0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectResourceManager", "ObjectResourceManager\ObjectResourceManager.csproj", "{6589BE3F-2F40-48BE-8633-9DF43D0623FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWinForms", "TestWinForms\TestWinForms.csproj", "{086D5F4A-B6D8-4127-83A8-2083E0173A17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectRepositoryImpl", "ObjectRepositoryImpl\ObjectRepositoryImpl.csproj", "{D82495D3-8E9C-4C1E-BD54-7282CD84E5A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityRepositoryImpl", "EntityRepositoryImpl\EntityRepositoryImpl.csproj", "{D82495D3-8E9C-4C1E-BD54-7282CD84E5A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWeb", "TestWeb\TestWeb.csproj", "{5F195477-8F78-4F4A-BD22-08CD87FF82DD}"
 EndProject

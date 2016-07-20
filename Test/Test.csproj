@@ -41,13 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models.cs" />
+    <Compile Include="MultiTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCases.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ObjectRepositoryContract\ObjectRepositoryContract.csproj">
+    <ProjectReference Include="..\EntityRepositoryContract\EntityRepositoryContract.csproj">
       <Project>{8ff8f9f7-aa61-4b39-afd2-3f8292eb7da0}</Project>
-      <Name>ObjectRepositoryContract</Name>
+      <Name>EntityRepositoryContract</Name>
     </ProjectReference>
     <ProjectReference Include="..\ObjectResourceManager\ObjectResourceManager.csproj">
       <Project>{6589be3f-2f40-48be-8633-9df43d0623fa}</Project>

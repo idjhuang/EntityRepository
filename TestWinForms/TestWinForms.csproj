@@ -88,13 +88,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ObjectRepositoryContract\ObjectRepositoryContract.csproj">
+    <ProjectReference Include="..\EntityRepositoryContract\EntityRepositoryContract.csproj">
       <Project>{8ff8f9f7-aa61-4b39-afd2-3f8292eb7da0}</Project>
-      <Name>ObjectRepositoryContract</Name>
+      <Name>EntityRepositoryContract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ObjectRepositoryImpl\ObjectRepositoryImpl.csproj">
+    <ProjectReference Include="..\EntityRepositoryImpl\EntityRepositoryImpl.csproj">
       <Project>{d82495d3-8e9c-4c1e-bd54-7282cd84e5a0}</Project>
-      <Name>ObjectRepositoryImpl</Name>
+      <Name>EntityRepositoryImpl</Name>
     </ProjectReference>
     <ProjectReference Include="..\ObjectResourceManager\ObjectResourceManager.csproj">
       <Project>{6589be3f-2f40-48be-8633-9df43d0623fa}</Project>

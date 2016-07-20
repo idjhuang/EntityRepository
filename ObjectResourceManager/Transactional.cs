@@ -7,19 +7,34 @@ using System.Threading;
 
 namespace ObjectResourceManager
 {
+    public static class Transactional
+    {
+        // timeout for lock and sql command execution
+        [ThreadStatic] private static TimeSpan _timeout;
+
+        public static TimeSpan Timeout
+        {
+            get {
+                if (_timeout == TimeSpan.Zero) _timeout = new TimeSpan(0, 5, 0);
+                return _timeout;
+            }
+            set { _timeout = value; }
+        }
+    }
+
     public class Transactional<T> : IEnlistmentNotification
     {
         private T _value;
-        private T _temporaryValue;
+        private T _unCommitedValue;
+        private readonly ThreadLocal<T> _temporaryValue = new ThreadLocal<T>();
         private readonly List<Transaction> _transactionList = new List<Transaction>();
         private ReaderWriterLockSlim ReaderWriterLock { get; }
-        protected bool IsDirty;
 
         public Transactional(T value)
         {
             ReaderWriterLock = new ReaderWriterLockSlim();
             _value = value;
-            IsDirty = false;
+            _unCommitedValue = value;
         }
 
         public Transactional(Transactional<T> transactional) : this(transactional.Value)
@@ -37,8 +52,9 @@ namespace ObjectResourceManager
         {
             IDisposable disposable = _value as IDisposable;
             disposable?.Dispose();
-            _value = _temporaryValue;
-            _temporaryValue = default(T);
+            _value = _temporaryValue.Value;
+            _unCommitedValue = _value;
+            _temporaryValue.Value = default(T);
             RemoveTransaction();
             Unlock();
             enlistment.Done();
@@ -51,16 +67,17 @@ namespace ObjectResourceManager
             enlistment.Done();
         }
 
-        public virtual void Prepare(PreparingEnlistment preparingEnlistment)
+        void IEnlistmentNotification.Prepare(PreparingEnlistment preparingEnlistment)
         {
             preparingEnlistment.Prepared();
         }
 
         void IEnlistmentNotification.Rollback(Enlistment enlistment)
         {
-            IDisposable disposable = _temporaryValue as IDisposable;
+            IDisposable disposable = _temporaryValue.Value as IDisposable;
             disposable?.Dispose();
-            _temporaryValue = default(T);
+            _unCommitedValue = _value;
+            _temporaryValue.Value = default(T);
             RemoveTransaction();
             Unlock();
             enlistment.Done();
@@ -74,7 +91,7 @@ namespace ObjectResourceManager
             _transactionList.Add(currentTransaction);
             Debug.Assert(currentTransaction.TransactionInformation.Status == TransactionStatus.Active);
             currentTransaction.EnlistVolatile(this, EnlistmentOptions.None);
-            _temporaryValue = ResourceManager.Clone(t);
+            _temporaryValue.Value = ResourceManager.Clone(t);
         }
 
         private void RemoveTransaction()
@@ -107,42 +124,43 @@ namespace ObjectResourceManager
             {
                 if (ReaderWriterLock.IsReadLockHeld) ReaderWriterLock.ExitReadLock();
                 if (ReaderWriterLock.IsWriteLockHeld) return;
-                if (!ReaderWriterLock.TryEnterWriteLock(TransactionScopeUtil.Timeout))
+                if (!ReaderWriterLock.TryEnterWriteLock(Transactional.Timeout))
                     throw new TimeoutException("Acquire write lock timeout.");
             }
             else
             {
                 if (ReaderWriterLock.IsWriteLockHeld) return;
                 if (ReaderWriterLock.IsReadLockHeld) return;
-                if (!ReaderWriterLock.TryEnterReadLock(TransactionScopeUtil.Timeout))
+                if (!ReaderWriterLock.TryEnterReadLock(Transactional.Timeout))
                     throw new TimeoutException("Acquire read lock timeout.");
             }
         }
 
-        private void SetValue(T t)
+        protected virtual void SetValue(T t)
         {
             Lock(true);
-            IsDirty = true;
             if (Transaction.Current == null)
             {
                 _value = t;
+                _unCommitedValue = t;
                 Unlock(true);
             }
             else
             {
                 Enlist(t);
-                _temporaryValue = t;
+                _temporaryValue.Value = t;
+                _unCommitedValue = t;
             }
         }
 
-        public T GetValue(LockMode lockMode = LockMode.Normal)
+        public virtual T GetValue(LockMode lockMode = LockMode.Normal)
         {
             if (Transaction.Current == null)
             {
                 switch (lockMode)
                 {
                     case LockMode.NoLock:
-                        return _temporaryValue;
+                        return _unCommitedValue;
                     case LockMode.Normal:
                         Lock(false);
                         Unlock(false);
@@ -156,10 +174,10 @@ namespace ObjectResourceManager
                 }
             }
             if ((Transaction.Current.IsolationLevel == IsolationLevel.ReadUncommitted && lockMode != LockMode.Exclusive) ||
-                (lockMode == LockMode.NoLock)) return _temporaryValue;
+                (lockMode == LockMode.NoLock)) return _unCommitedValue;
             Lock(Transaction.Current.IsolationLevel == IsolationLevel.Serializable || lockMode == LockMode.Exclusive);
             Enlist(_value);
-            return _temporaryValue;
+            return _temporaryValue.Value;
         }
 
         public T Value

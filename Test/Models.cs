@@ -1,34 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ObjectRepositoryContract;
+using EntityRepositoryContract;
 
 namespace Test
 {
     [Serializable]
-    public class Simple : ObjectRepositoryContract.Object
+    public class Simple : Entity
     {
         public Simple(Guid id) : base(id) { }
-
         public int IntProperty { get; set; }
         public string StrProperty { get; set; }
     }
 
     [Serializable]
-    public class Container : ObjectRepositoryContract.Object
+    public class Container : Entity
     {
         public Container(Guid id) : base(id) { }
-
-        public ObjectReference<Simple> SimpleReference;
+        public TransactionalEntityReference<Simple> SimpleReference;
         public string StrProperty { get; set; }
     }
 
     [Serializable]
-    public class ObjList : ObjectRepositoryContract.Object
+    public class ObjList : Entity
     {
         public ObjList(Guid id) : base(id) { }
-        public ObjectList<Simple> SimpleList;
+        public TransactionalEntityList<Simple> SimpleList;
         public int IntProperty { get; set; }
     }
 }

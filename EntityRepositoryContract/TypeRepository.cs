@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
-namespace ObjectRepositoryContract
+namespace EntityRepositoryContract
 {
     public static class TypeRepository
     {

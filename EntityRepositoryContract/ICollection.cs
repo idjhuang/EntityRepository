@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ObjectRepositoryContract
+namespace EntityRepositoryContract
 {
     public interface ICollection
     {
         IList<Type> SupportedTypes();
-        object GetObject(object id, bool reload = false);
-        void InsertObject(object obj);
-        void UpdateObject(object obj);
-        void DeleteObject(object obj);
+        object GetEntity(object id, bool reload = false);
+        void InsertEntity(object obj);
+        void UpdateEntity(object obj);
+        void DeleteEntity(object obj);
         void RemoveReclaimedObjects();
         void RegisterReference(IReference reference);
         IEnumerable<Type> GetAllTypes();
-        IList<object> GetAllObjects(Type type);
+        IList<object> GetAllEntities(Type type);
     }
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ObjectRepositoryContract.Properties {
+namespace EntityRepositoryImpl.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,12 +25,11 @@ namespace ObjectRepositoryContract.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfString xmlns:xsi=\"http://www.w3." +
-            "org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <s" +
-            "tring>ObjectRepositoryImpl.dll</string>\r\n</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection ModuleList {
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=JAMESPC;Initial Catalog=EntityRepository;Integrated Security=True")]
+        public string EntityRepositoryConnectionString {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["ModuleList"]));
+                return ((string)(this["EntityRepositoryConnectionString"]));
             }
         }
     }

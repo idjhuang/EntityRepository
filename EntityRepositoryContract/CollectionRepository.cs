@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
-namespace ObjectRepositoryContract
+namespace EntityRepositoryContract
 {
     public static class CollectionRepository
     {
@@ -20,7 +19,7 @@ namespace ObjectRepositoryContract
             // init type repository
             TypeRepository.Init();
             // load all entity modules
-            TypeRepository.LoadModules(typeof(Object));
+            TypeRepository.LoadModules(typeof(Entity));
             // load all collection modules
             var collectionTypes = TypeRepository.LoadModules(typeof(ICollection));
             foreach (var collection in from collectionType in collectionTypes where collectionType.IsClass select Activator.CreateInstance(collectionType))
@@ -40,7 +39,7 @@ namespace ObjectRepositoryContract
         public static ICollection GetCollection(Type type)
         {
             // return default collection implementation when type not found in collection table
-            return Collections.ContainsKey(type) ? Collections[type] : Collections[typeof(Object)];
+            return Collections.ContainsKey(type) ? Collections[type] : Collections[typeof(object)];
         }
 
         public static void RegisterReference(IReference reference)

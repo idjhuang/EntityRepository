@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Mvc;
-using ObjectRepositoryContract;
+﻿using System.Web.Http;
 using Test;
-using TestWeb.Models;
 
 namespace TestWeb.Controllers
 {

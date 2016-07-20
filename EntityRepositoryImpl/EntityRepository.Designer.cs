@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace ObjectRepositoryImpl {
+namespace EntityRepositoryImpl {
     
     
     /// <summary>
@@ -20,17 +20,17 @@ namespace ObjectRepositoryImpl {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("ObjectRepository")]
+    [global::System.Xml.Serialization.XmlRootAttribute("EntityRepository")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
-    public partial class ObjectRepository : global::System.Data.DataSet {
+    public partial class EntityRepository : global::System.Data.DataSet {
         
-        private ObjectRepositoryDataTable tableObjectRepository;
+        private EntityRepositoryDataTable tableEntityRepository;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public ObjectRepository() {
+        public EntityRepository() {
             this.BeginInit();
             this.InitClass();
             global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
@@ -41,7 +41,7 @@ namespace ObjectRepositoryImpl {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected ObjectRepository(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+        protected EntityRepository(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
@@ -54,8 +54,8 @@ namespace ObjectRepositoryImpl {
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
-                if ((ds.Tables["ObjectRepository"] != null)) {
-                    base.Tables.Add(new ObjectRepositoryDataTable(ds.Tables["ObjectRepository"]));
+                if ((ds.Tables["EntityRepository"] != null)) {
+                    base.Tables.Add(new EntityRepositoryDataTable(ds.Tables["EntityRepository"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -79,9 +79,9 @@ namespace ObjectRepositoryImpl {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public ObjectRepositoryDataTable _ObjectRepository {
+        public EntityRepositoryDataTable _EntityRepository {
             get {
-                return this.tableObjectRepository;
+                return this.tableEntityRepository;
             }
         }
         
@@ -127,7 +127,7 @@ namespace ObjectRepositoryImpl {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            ObjectRepository cln = ((ObjectRepository)(base.Clone()));
+            EntityRepository cln = ((EntityRepository)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -152,8 +152,8 @@ namespace ObjectRepositoryImpl {
                 this.Reset();
                 global::System.Data.DataSet ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
-                if ((ds.Tables["ObjectRepository"] != null)) {
-                    base.Tables.Add(new ObjectRepositoryDataTable(ds.Tables["ObjectRepository"]));
+                if ((ds.Tables["EntityRepository"] != null)) {
+                    base.Tables.Add(new EntityRepositoryDataTable(ds.Tables["EntityRepository"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -188,10 +188,10 @@ namespace ObjectRepositoryImpl {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         internal void InitVars(bool initTable) {
-            this.tableObjectRepository = ((ObjectRepositoryDataTable)(base.Tables["ObjectRepository"]));
+            this.tableEntityRepository = ((EntityRepositoryDataTable)(base.Tables["EntityRepository"]));
             if ((initTable == true)) {
-                if ((this.tableObjectRepository != null)) {
-                    this.tableObjectRepository.InitVars();
+                if ((this.tableEntityRepository != null)) {
+                    this.tableEntityRepository.InitVars();
                 }
             }
         }
@@ -199,18 +199,18 @@ namespace ObjectRepositoryImpl {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "ObjectRepository";
+            this.DataSetName = "EntityRepository";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/ObjectRepository.xsd";
+            this.Namespace = "http://tempuri.org/EntityRepository.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
-            this.tableObjectRepository = new ObjectRepositoryDataTable();
-            base.Tables.Add(this.tableObjectRepository);
+            this.tableEntityRepository = new EntityRepositoryDataTable();
+            base.Tables.Add(this.tableEntityRepository);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerialize_ObjectRepository() {
+        private bool ShouldSerialize_EntityRepository() {
             return false;
         }
         
@@ -225,7 +225,7 @@ namespace ObjectRepositoryImpl {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            ObjectRepository ds = new ObjectRepository();
+            EntityRepository ds = new EntityRepository();
             global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
             global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
             global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
@@ -270,14 +270,14 @@ namespace ObjectRepositoryImpl {
         }
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void ObjectRepositoryRowChangeEventHandler(object sender, ObjectRepositoryRowChangeEvent e);
+        public delegate void EntityRepositoryRowChangeEventHandler(object sender, EntityRepositoryRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class ObjectRepositoryDataTable : global::System.Data.TypedTableBase<ObjectRepositoryRow> {
+        public partial class EntityRepositoryDataTable : global::System.Data.TypedTableBase<EntityRepositoryRow> {
             
             private global::System.Data.DataColumn columnId;
             
@@ -287,8 +287,8 @@ namespace ObjectRepositoryImpl {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ObjectRepositoryDataTable() {
-                this.TableName = "ObjectRepository";
+            public EntityRepositoryDataTable() {
+                this.TableName = "EntityRepository";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -296,7 +296,7 @@ namespace ObjectRepositoryImpl {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal ObjectRepositoryDataTable(global::System.Data.DataTable table) {
+            internal EntityRepositoryDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -313,7 +313,7 @@ namespace ObjectRepositoryImpl {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected ObjectRepositoryDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected EntityRepositoryDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -353,54 +353,54 @@ namespace ObjectRepositoryImpl {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ObjectRepositoryRow this[int index] {
+            public EntityRepositoryRow this[int index] {
                 get {
-                    return ((ObjectRepositoryRow)(this.Rows[index]));
+                    return ((EntityRepositoryRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ObjectRepositoryRowChangeEventHandler ObjectRepositoryRowChanging;
+            public event EntityRepositoryRowChangeEventHandler EntityRepositoryRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ObjectRepositoryRowChangeEventHandler ObjectRepositoryRowChanged;
+            public event EntityRepositoryRowChangeEventHandler EntityRepositoryRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ObjectRepositoryRowChangeEventHandler ObjectRepositoryRowDeleting;
+            public event EntityRepositoryRowChangeEventHandler EntityRepositoryRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event ObjectRepositoryRowChangeEventHandler ObjectRepositoryRowDeleted;
+            public event EntityRepositoryRowChangeEventHandler EntityRepositoryRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddObjectRepositoryRow(ObjectRepositoryRow row) {
+            public void AddEntityRepositoryRow(EntityRepositoryRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ObjectRepositoryRow AddObjectRepositoryRow(System.Guid Id, string Type, string JSON) {
-                ObjectRepositoryRow rowObjectRepositoryRow = ((ObjectRepositoryRow)(this.NewRow()));
+            public EntityRepositoryRow AddEntityRepositoryRow(System.Guid Id, string Type, string JSON) {
+                EntityRepositoryRow rowEntityRepositoryRow = ((EntityRepositoryRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
                         Type,
                         JSON};
-                rowObjectRepositoryRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowObjectRepositoryRow);
-                return rowObjectRepositoryRow;
+                rowEntityRepositoryRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowEntityRepositoryRow);
+                return rowEntityRepositoryRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ObjectRepositoryRow FindById(System.Guid Id) {
-                return ((ObjectRepositoryRow)(this.Rows.Find(new object[] {
+            public EntityRepositoryRow FindById(System.Guid Id) {
+                return ((EntityRepositoryRow)(this.Rows.Find(new object[] {
                             Id})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                ObjectRepositoryDataTable cln = ((ObjectRepositoryDataTable)(base.Clone()));
+                EntityRepositoryDataTable cln = ((EntityRepositoryDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -408,7 +408,7 @@ namespace ObjectRepositoryImpl {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new ObjectRepositoryDataTable();
+                return new EntityRepositoryDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -436,34 +436,34 @@ namespace ObjectRepositoryImpl {
                 this.columnType.MaxLength = 260;
                 this.columnJSON.AllowDBNull = false;
                 this.columnJSON.MaxLength = 2147483647;
-                this.ExtendedProperties.Add("Generator_TablePropName", "_ObjectRepository");
-                this.ExtendedProperties.Add("Generator_UserTableName", "ObjectRepository");
+                this.ExtendedProperties.Add("Generator_TablePropName", "_EntityRepository");
+                this.ExtendedProperties.Add("Generator_UserTableName", "EntityRepository");
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ObjectRepositoryRow NewObjectRepositoryRow() {
-                return ((ObjectRepositoryRow)(this.NewRow()));
+            public EntityRepositoryRow NewEntityRepositoryRow() {
+                return ((EntityRepositoryRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new ObjectRepositoryRow(builder);
+                return new EntityRepositoryRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(ObjectRepositoryRow);
+                return typeof(EntityRepositoryRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.ObjectRepositoryRowChanged != null)) {
-                    this.ObjectRepositoryRowChanged(this, new ObjectRepositoryRowChangeEvent(((ObjectRepositoryRow)(e.Row)), e.Action));
+                if ((this.EntityRepositoryRowChanged != null)) {
+                    this.EntityRepositoryRowChanged(this, new EntityRepositoryRowChangeEvent(((EntityRepositoryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -471,8 +471,8 @@ namespace ObjectRepositoryImpl {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.ObjectRepositoryRowChanging != null)) {
-                    this.ObjectRepositoryRowChanging(this, new ObjectRepositoryRowChangeEvent(((ObjectRepositoryRow)(e.Row)), e.Action));
+                if ((this.EntityRepositoryRowChanging != null)) {
+                    this.EntityRepositoryRowChanging(this, new EntityRepositoryRowChangeEvent(((EntityRepositoryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -480,8 +480,8 @@ namespace ObjectRepositoryImpl {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.ObjectRepositoryRowDeleted != null)) {
-                    this.ObjectRepositoryRowDeleted(this, new ObjectRepositoryRowChangeEvent(((ObjectRepositoryRow)(e.Row)), e.Action));
+                if ((this.EntityRepositoryRowDeleted != null)) {
+                    this.EntityRepositoryRowDeleted(this, new EntityRepositoryRowChangeEvent(((EntityRepositoryRow)(e.Row)), e.Action));
                 }
             }
             
@@ -489,14 +489,14 @@ namespace ObjectRepositoryImpl {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.ObjectRepositoryRowDeleting != null)) {
-                    this.ObjectRepositoryRowDeleting(this, new ObjectRepositoryRowChangeEvent(((ObjectRepositoryRow)(e.Row)), e.Action));
+                if ((this.EntityRepositoryRowDeleting != null)) {
+                    this.EntityRepositoryRowDeleting(this, new EntityRepositoryRowChangeEvent(((EntityRepositoryRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveObjectRepositoryRow(ObjectRepositoryRow row) {
+            public void RemoveEntityRepositoryRow(EntityRepositoryRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -505,7 +505,7 @@ namespace ObjectRepositoryImpl {
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
                 global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
                 global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                ObjectRepository ds = new ObjectRepository();
+                EntityRepository ds = new EntityRepository();
                 global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
@@ -523,7 +523,7 @@ namespace ObjectRepositoryImpl {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "ObjectRepositoryDataTable";
+                attribute2.FixedValue = "EntityRepositoryDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -567,25 +567,25 @@ namespace ObjectRepositoryImpl {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class ObjectRepositoryRow : global::System.Data.DataRow {
+        public partial class EntityRepositoryRow : global::System.Data.DataRow {
             
-            private ObjectRepositoryDataTable tableObjectRepository;
+            private EntityRepositoryDataTable tableEntityRepository;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal ObjectRepositoryRow(global::System.Data.DataRowBuilder rb) : 
+            internal EntityRepositoryRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableObjectRepository = ((ObjectRepositoryDataTable)(this.Table));
+                this.tableEntityRepository = ((EntityRepositoryDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public System.Guid Id {
                 get {
-                    return ((global::System.Guid)(this[this.tableObjectRepository.IdColumn]));
+                    return ((global::System.Guid)(this[this.tableEntityRepository.IdColumn]));
                 }
                 set {
-                    this[this.tableObjectRepository.IdColumn] = value;
+                    this[this.tableEntityRepository.IdColumn] = value;
                 }
             }
             
@@ -593,10 +593,10 @@ namespace ObjectRepositoryImpl {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Type {
                 get {
-                    return ((string)(this[this.tableObjectRepository.TypeColumn]));
+                    return ((string)(this[this.tableEntityRepository.TypeColumn]));
                 }
                 set {
-                    this[this.tableObjectRepository.TypeColumn] = value;
+                    this[this.tableEntityRepository.TypeColumn] = value;
                 }
             }
             
@@ -604,10 +604,10 @@ namespace ObjectRepositoryImpl {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string JSON {
                 get {
-                    return ((string)(this[this.tableObjectRepository.JSONColumn]));
+                    return ((string)(this[this.tableEntityRepository.JSONColumn]));
                 }
                 set {
-                    this[this.tableObjectRepository.JSONColumn] = value;
+                    this[this.tableEntityRepository.JSONColumn] = value;
                 }
             }
         }
@@ -616,22 +616,22 @@ namespace ObjectRepositoryImpl {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class ObjectRepositoryRowChangeEvent : global::System.EventArgs {
+        public class EntityRepositoryRowChangeEvent : global::System.EventArgs {
             
-            private ObjectRepositoryRow eventRow;
+            private EntityRepositoryRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ObjectRepositoryRowChangeEvent(ObjectRepositoryRow row, global::System.Data.DataRowAction action) {
+            public EntityRepositoryRowChangeEvent(EntityRepositoryRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public ObjectRepositoryRow Row {
+            public EntityRepositoryRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -647,7 +647,7 @@ namespace ObjectRepositoryImpl {
         }
     }
 }
-namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
+namespace EntityRepositoryImpl.EntityRepositoryTableAdapters {
     
     
     /// <summary>
@@ -659,7 +659,7 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class ObjectRepositoryTableAdapter : global::System.ComponentModel.Component {
+    public partial class EntityRepositoryTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -673,7 +673,7 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public ObjectRepositoryTableAdapter() {
+        public EntityRepositoryTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -770,31 +770,31 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "ObjectRepository";
+            tableMapping.DataSetTable = "EntityRepository";
             tableMapping.ColumnMappings.Add("Id", "Id");
             tableMapping.ColumnMappings.Add("Type", "Type");
             tableMapping.ColumnMappings.Add("JSON", "JSON");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[ObjectRepository] WHERE (([Id] = @Original_Id) AND ([Type] = @" +
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[EntityRepository] WHERE (([Id] = @Original_Id) AND ([Type] = @" +
                 "Original_Type))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Type", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Type", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[ObjectRepository] ([Id], [Type], [JSON]) VALUES (@Id, @Type, @" +
-                "JSON);\r\nSELECT Id, Type, JSON FROM ObjectRepository WHERE (Id = @Id)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[EntityRepository] ([Id], [Type], [JSON]) VALUES (@Id, @Type, @" +
+                "JSON);\r\nSELECT Id, Type, JSON FROM EntityRepository WHERE (Id = @Id)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Type", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Type", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@JSON", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "JSON", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[ObjectRepository] SET [Id] = @Id, [Type] = @Type, [JSON] = @JSON WH" +
+            this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[EntityRepository] SET [Id] = @Id, [Type] = @Type, [JSON] = @JSON WH" +
                 "ERE (([Id] = @Original_Id) AND ([Type] = @Original_Type));\r\nSELECT Id, Type, JSO" +
-                "N FROM ObjectRepository WHERE (Id = @Id)";
+                "N FROM EntityRepository WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Type", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Type", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -807,7 +807,7 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ObjectRepositoryImpl.Properties.Settings.Default.ObjectRepositoryConnectionString;
+            this._connection.ConnectionString = global::EntityRepositoryImpl.Properties.Settings.Default.EntityRepositoryConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -816,12 +816,12 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[6];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT Id, Type, JSON FROM dbo.ObjectRepository";
+            this._commandCollection[0].CommandText = "SELECT Id, Type, JSON FROM dbo.EntityRepository";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "IF (SELECT COUNT(*) FROM ObjectRepository WHERE Id = @Id) > 0\r\n  UPDATE ObjectRep" +
-                "ository SET JSON = @JSON WHERE Id = @Id;\r\nELSE\r\n  INSERT INTO ObjectRepository V" +
+            this._commandCollection[1].CommandText = "IF (SELECT COUNT(*) FROM EntityRepository WHERE Id = @Id) > 0\r\n  UPDATE EntityRep" +
+                "ository SET JSON = @JSON WHERE Id = @Id;\r\nELSE\r\n  INSERT INTO EntityRepository V" +
                 "ALUES (@Id, @Type, @JSON);";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -829,31 +829,31 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@JSON", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "JSON", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "DELETE FROM [dbo].[ObjectRepository] WHERE Id = @Id";
+            this._commandCollection[2].CommandText = "DELETE FROM [dbo].[EntityRepository] WHERE Id = @Id";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.UniqueIdentifier, 16, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT DISTINCT CAST(0x0 AS UNIQUEIDENTIFIER) AS Id, Type, \'\' AS JSON FROM dbo.Ob" +
-                "jectRepository";
+            this._commandCollection[3].CommandText = "SELECT DISTINCT CAST(0x0 AS UNIQUEIDENTIFIER) AS Id, Type, \'\' AS JSON FROM dbo.En" +
+                "tityRepository";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = "SELECT Id, Type, JSON FROM dbo.ObjectRepository WHERE Id = @Id";
+            this._commandCollection[4].CommandText = "SELECT Id, JSON, Type FROM EntityRepository WHERE (Type = @Type)";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.UniqueIdentifier, 16, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Type", global::System.Data.SqlDbType.NVarChar, 260, global::System.Data.ParameterDirection.Input, 0, 0, "Type", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[5].Connection = this.Connection;
-            this._commandCollection[5].CommandText = "SELECT Id, Type, JSON FROM dbo.ObjectRepository WHERE Type = @Type";
+            this._commandCollection[5].CommandText = "SELECT Id, JSON, Type FROM EntityRepository WHERE (Id = @Id)";
             this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Type", global::System.Data.SqlDbType.NVarChar, 260, global::System.Data.ParameterDirection.Input, 0, 0, "Type", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.UniqueIdentifier, 16, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(ObjectRepository.ObjectRepositoryDataTable dataTable) {
+        public virtual int Fill(EntityRepository.EntityRepositoryDataTable dataTable) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -866,9 +866,9 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual ObjectRepository.ObjectRepositoryDataTable GetData() {
+        public virtual EntityRepository.EntityRepositoryDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            ObjectRepository.ObjectRepositoryDataTable dataTable = new ObjectRepository.ObjectRepositoryDataTable();
+            EntityRepository.EntityRepositoryDataTable dataTable = new EntityRepository.EntityRepositoryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -877,9 +877,9 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual ObjectRepository.ObjectRepositoryDataTable GetAllTypes() {
+        public virtual EntityRepository.EntityRepositoryDataTable GetAllTypes() {
             this.Adapter.SelectCommand = this.CommandCollection[3];
-            ObjectRepository.ObjectRepositoryDataTable dataTable = new ObjectRepository.ObjectRepositoryDataTable();
+            EntityRepository.EntityRepositoryDataTable dataTable = new EntityRepository.EntityRepositoryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -888,27 +888,15 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual ObjectRepository.ObjectRepositoryDataTable GetObject(System.Guid Id) {
+        public virtual EntityRepository.EntityRepositoryDataTable GetEntitiesByType(string Type) {
             this.Adapter.SelectCommand = this.CommandCollection[4];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((System.Guid)(Id));
-            ObjectRepository.ObjectRepositoryDataTable dataTable = new ObjectRepository.ObjectRepositoryDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual ObjectRepository.ObjectRepositoryDataTable GetObjectsByType(string Type) {
-            this.Adapter.SelectCommand = this.CommandCollection[5];
             if ((Type == null)) {
                 throw new global::System.ArgumentNullException("Type");
             }
             else {
                 this.Adapter.SelectCommand.Parameters[0].Value = ((string)(Type));
             }
-            ObjectRepository.ObjectRepositoryDataTable dataTable = new ObjectRepository.ObjectRepositoryDataTable();
+            EntityRepository.EntityRepositoryDataTable dataTable = new EntityRepository.EntityRepositoryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -916,15 +904,27 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(ObjectRepository.ObjectRepositoryDataTable dataTable) {
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual EntityRepository.EntityRepositoryDataTable GetEntity(System.Guid Id) {
+            this.Adapter.SelectCommand = this.CommandCollection[5];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.Guid)(Id));
+            EntityRepository.EntityRepositoryDataTable dataTable = new EntityRepository.EntityRepositoryDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(EntityRepository.EntityRepositoryDataTable dataTable) {
             return this.Adapter.Update(dataTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(ObjectRepository dataSet) {
-            return this.Adapter.Update(dataSet, "ObjectRepository");
+        public virtual int Update(EntityRepository dataSet) {
+            return this.Adapter.Update(dataSet, "EntityRepository");
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1056,8 +1056,8 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
-        public virtual int AddObject(System.Guid Id, string Type, string JSON) {
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
+        public virtual int AddEntity(System.Guid Id, string Type, string JSON) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
             command.Parameters[0].Value = ((System.Guid)(Id));
             if ((Type == null)) {
@@ -1093,7 +1093,7 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, false)]
-        public virtual int DeleteObject(System.Guid Id) {
+        public virtual int DeleteEntity(System.Guid Id) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
             command.Parameters[0].Value = ((System.Guid)(Id));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
@@ -1126,7 +1126,7 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         
         private UpdateOrderOption _updateOrder;
         
-        private ObjectRepositoryTableAdapter _objectRepositoryTableAdapter;
+        private EntityRepositoryTableAdapter _entityRepositoryTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -1148,12 +1148,12 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
             "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
             "a", "System.Drawing.Design.UITypeEditor")]
-        public ObjectRepositoryTableAdapter ObjectRepositoryTableAdapter {
+        public EntityRepositoryTableAdapter EntityRepositoryTableAdapter {
             get {
-                return this._objectRepositoryTableAdapter;
+                return this._entityRepositoryTableAdapter;
             }
             set {
-                this._objectRepositoryTableAdapter = value;
+                this._entityRepositoryTableAdapter = value;
             }
         }
         
@@ -1176,9 +1176,9 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
                 if ((this._connection != null)) {
                     return this._connection;
                 }
-                if (((this._objectRepositoryTableAdapter != null) 
-                            && (this._objectRepositoryTableAdapter.Connection != null))) {
-                    return this._objectRepositoryTableAdapter.Connection;
+                if (((this._entityRepositoryTableAdapter != null) 
+                            && (this._entityRepositoryTableAdapter.Connection != null))) {
+                    return this._entityRepositoryTableAdapter.Connection;
                 }
                 return null;
             }
@@ -1193,7 +1193,7 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         public int TableAdapterInstanceCount {
             get {
                 int count = 0;
-                if ((this._objectRepositoryTableAdapter != null)) {
+                if ((this._entityRepositoryTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -1205,14 +1205,14 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateUpdatedRows(ObjectRepository dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateUpdatedRows(EntityRepository dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._objectRepositoryTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet._ObjectRepository.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._entityRepositoryTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet._EntityRepository.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._objectRepositoryTableAdapter.Update(updatedRows));
+                    result = (result + this._entityRepositoryTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -1224,13 +1224,13 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateInsertedRows(ObjectRepository dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
+        private int UpdateInsertedRows(EntityRepository dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
-            if ((this._objectRepositoryTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet._ObjectRepository.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._entityRepositoryTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet._EntityRepository.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._objectRepositoryTableAdapter.Update(addedRows));
+                    result = (result + this._entityRepositoryTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -1242,13 +1242,13 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private int UpdateDeletedRows(ObjectRepository dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
+        private int UpdateDeletedRows(EntityRepository dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._objectRepositoryTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet._ObjectRepository.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._entityRepositoryTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet._EntityRepository.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._objectRepositoryTableAdapter.Update(deletedRows));
+                    result = (result + this._entityRepositoryTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -1284,15 +1284,15 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
         ///</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public virtual int UpdateAll(ObjectRepository dataSet) {
+        public virtual int UpdateAll(EntityRepository dataSet) {
             if ((dataSet == null)) {
                 throw new global::System.ArgumentNullException("dataSet");
             }
             if ((dataSet.HasChanges() == false)) {
                 return 0;
             }
-            if (((this._objectRepositoryTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._objectRepositoryTableAdapter.Connection) == false))) {
+            if (((this._entityRepositoryTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._entityRepositoryTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
@@ -1328,13 +1328,13 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
             try {
                 // ---- Prepare for update -----------
                 //
-                if ((this._objectRepositoryTableAdapter != null)) {
-                    revertConnections.Add(this._objectRepositoryTableAdapter, this._objectRepositoryTableAdapter.Connection);
-                    this._objectRepositoryTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._objectRepositoryTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._objectRepositoryTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._objectRepositoryTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._objectRepositoryTableAdapter.Adapter);
+                if ((this._entityRepositoryTableAdapter != null)) {
+                    revertConnections.Add(this._entityRepositoryTableAdapter, this._entityRepositoryTableAdapter.Connection);
+                    this._entityRepositoryTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._entityRepositoryTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._entityRepositoryTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._entityRepositoryTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._entityRepositoryTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -1395,9 +1395,9 @@ namespace ObjectRepositoryImpl.ObjectRepositoryTableAdapters {
                 if (workConnOpened) {
                     workConnection.Close();
                 }
-                if ((this._objectRepositoryTableAdapter != null)) {
-                    this._objectRepositoryTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._objectRepositoryTableAdapter]));
-                    this._objectRepositoryTableAdapter.Transaction = null;
+                if ((this._entityRepositoryTableAdapter != null)) {
+                    this._entityRepositoryTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._entityRepositoryTableAdapter]));
+                    this._entityRepositoryTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
+using EntityRepositoryContract;
+using EntityRepositoryImpl.EntityRepositoryTableAdapters;
 using Newtonsoft.Json;
-using ObjectRepositoryContract;
-using ObjectRepositoryImpl.ObjectRepositoryTableAdapters;
-using ObjectResourceManager;
 
-namespace ObjectRepositoryImpl
+namespace EntityRepositoryImpl
 {
-    public class ObjectCollection : ICollection
+    public class EntityCollection : ICollection
     {
         private readonly Dictionary<Guid, WeakReference>  _objectTable = new Dictionary<Guid, WeakReference>();
         private readonly EventLog _log = new EventLog("Application", ".", "Object Repository");
@@ -19,10 +17,10 @@ namespace ObjectRepositoryImpl
         public IList<Type> SupportedTypes()
         {
             // use ObjectValue indicate default collection
-            return new[] {typeof (ObjectRepositoryContract.Object)};
+            return new[] {typeof (object)};
         }
 
-        public object GetObject(object id, bool reload = false)
+        public object GetEntity(object id, bool reload = false)
         {
             if (id == null) return null;
             var guid = Guid.Empty;
@@ -37,17 +35,18 @@ namespace ObjectRepositoryImpl
             }
             try
             {
-                var adapter = new ObjectRepositoryTableAdapter();
+                var adapter = new EntityRepositoryTableAdapter();
                 if (TransactionScopeUtil.DbConnection != null)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
-                var objTbl = adapter.GetObject(guid);
-                if (objTbl.Rows.Count == 0) return null;
-                var objRow = objTbl.Rows[0] as ObjectRepository.ObjectRepositoryRow;
-                var type = TypeRepository.GetType(objRow.Type);
-                if (type == null) throw new TypeAccessException($"Type {objRow.Type} not found.");
+                var tbl = adapter.GetEntity(guid);
+                if (tbl.Rows.Count == 0) return null;
+                var row = tbl.Rows[0] as EntityRepository.EntityRepositoryRow;
+                if (row == null) throw new ArgumentException($"Object Id: {id} not found.");
+                var entityType = TypeRepository.GetType(row.Type);
+                if (entityType == null) throw new TypeAccessException($"Type {row.Type} not found.");
                 // Deserialize object value
-                var objVal = JsonConvert.DeserializeObject(objRow.JSON, type);
-                var obj = TransactionalObject.CreateTransactionalObject(type, objVal as ObjectRepositoryContract.Object);
+                var entity = JsonConvert.DeserializeObject(row.JSON, entityType);
+                var obj = TransactionalEntity.CreateTransactionalEntity(entityType, entity);
                 var reference = new WeakReference(obj);
                 _objectTable.Add(guid, reference);
                 return obj;
@@ -59,12 +58,12 @@ namespace ObjectRepositoryImpl
             }
         }
 
-        public void InsertObject(object obj)
+        public void InsertEntity(object obj)
         {
             dynamic o = obj;
-            var objVal = o.Value;
-            if (!(objVal is ObjectRepositoryContract.Object)) return;
-            var id = objVal.Id;
+            var entity = o.Value;
+            if (!(entity is Entity)) throw new ArgumentException("object's value must be subclass of Entity.");
+            var id = entity.Id;
             if (id == null) return;
             var guid = Guid.Empty;
             if (id is string) guid = new Guid((string)id);
@@ -75,11 +74,11 @@ namespace ObjectRepositoryImpl
             _objectTable.Add(guid, reference);
             try
             {
-                var json = JsonConvert.SerializeObject(objVal);
-                var adapter = new ObjectRepositoryTableAdapter();
+                var json = JsonConvert.SerializeObject(entity);
+                var adapter = new EntityRepositoryTableAdapter();
                 if (TransactionScopeUtil.DbConnection != null)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
-                adapter.AddObject(guid, objVal.GetType().FullName, json);
+                adapter.AddEntity(guid, entity.GetType().FullName, json);
             }
             catch (Exception e)
             {
@@ -88,12 +87,12 @@ namespace ObjectRepositoryImpl
             }
         }
 
-        public void UpdateObject(object obj)
+        public void UpdateEntity(object obj)
         {
             dynamic o = obj;
-            var ojbVal = o.Value;
-            if (!(ojbVal is ObjectRepositoryContract.Object)) return;
-            var id = ojbVal.Id;
+            var entity = o.Value;
+            if (!(entity is Entity)) throw new ArgumentException("object's value must be subclass of Entity.");
+            var id = entity.Id;
             if (id == null) return;
             var guid = Guid.Empty;
             if (id is string) guid = new Guid((string)id);
@@ -106,11 +105,11 @@ namespace ObjectRepositoryImpl
             }
             try
             {
-                var json = JsonConvert.SerializeObject(ojbVal);
-                var adapter = new ObjectRepositoryTableAdapter();
+                var json = JsonConvert.SerializeObject(entity);
+                var adapter = new EntityRepositoryTableAdapter();
                 if (TransactionScopeUtil.DbConnection != null)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
-                adapter.AddObject(guid, ojbVal.Type, json);
+                adapter.AddEntity(guid, entity.GetType().FullName, json);
             }
             catch (Exception e)
             {
@@ -119,12 +118,12 @@ namespace ObjectRepositoryImpl
             }
         }
 
-        public void DeleteObject(object obj)
+        public void DeleteEntity(object obj)
         {
             dynamic o = obj;
-            var ojbVal = o.Value;
-            if (!(ojbVal is ObjectRepositoryContract.Object)) return;
-            var id = ojbVal.Id;
+            var entity = o.Value;
+            if (!(entity is Entity)) throw new ArgumentException("object's value must be subclass of Entity.");
+            var id = entity.Id;
             if (id == null) return;
             var guid = Guid.Empty;
             if (id is string) guid = new Guid((string)id);
@@ -133,10 +132,10 @@ namespace ObjectRepositoryImpl
             if (_objectTable.ContainsKey(guid)) _objectTable.Remove(guid);
             try
             {
-                var adapter = new ObjectRepositoryTableAdapter();
+                var adapter = new EntityRepositoryTableAdapter();
                 if (TransactionScopeUtil.DbConnection != null)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
-                adapter.DeleteObject(guid);
+                adapter.DeleteEntity(guid);
             }
             catch (Exception e)
             {
@@ -165,11 +164,12 @@ namespace ObjectRepositoryImpl
             var typeNameList = new List<string>();
             try
             {
-                var adapter = new ObjectRepositoryTableAdapter();
+                var adapter = new EntityRepositoryTableAdapter();
                 if (TransactionScopeUtil.DbConnection != null)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
                 var typeTbl = adapter.GetAllTypes();
-                typeNameList.AddRange(from ObjectRepository.ObjectRepositoryRow row in typeTbl.Rows select row.Type);
+                typeNameList.AddRange(from EntityRepository.EntityRepositoryRow row in typeTbl.Rows select row.Type);
+                typeList.AddRange(typeNameList.Select(TypeRepository.GetType));
                 return typeList;
             }
             catch (Exception e)
@@ -179,26 +179,33 @@ namespace ObjectRepositoryImpl
             }
         }
 
-        public IList<object> GetAllObjects(Type type)
+        public IList<object> GetAllEntities(Type entityType)
         {
             try
             {
+                RemoveReclaimedObjects();
+                if(!typeof(Entity).IsAssignableFrom(entityType)) throw new ArgumentException("object's value must be subclass of Entity.");
                 var objList = new List<object>();
-                var adapter = new ObjectRepositoryTableAdapter();
+                var adapter = new EntityRepositoryTableAdapter();
                 if (TransactionScopeUtil.DbConnection != null)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
-                var objTbl = adapter.GetObjectsByType(type.FullName);
-                foreach (ObjectRepository.ObjectRepositoryRow row in objTbl.Rows)
+                var tbl = adapter.GetEntitiesByType(entityType.FullName);
+                foreach (EntityRepository.EntityRepositoryRow row in tbl.Rows)
                 {
-                    var objVal = JsonConvert.DeserializeObject(row.JSON, type) as ObjectRepositoryContract.Object;
+                    var entity = JsonConvert.DeserializeObject(row.JSON, entityType);
+                    var obj = TransactionalEntity.CreateTransactionalEntity(entityType, entity);
+                    var e = entity as Entity;
                     var guid = Guid.Empty;
-                    if (objVal.Id is string) guid = new Guid((string)objVal.Id);
-                    if (objVal.Id is Guid) guid = (Guid)objVal.Id;
+                    if (e != null)
+                    {
+                        var id = e.Id;
+                        if (id is string) guid = new Guid((string) id);
+                        if (id is Guid) guid = (Guid) id;
+                    }
                     if (_objectTable.ContainsKey(guid))
                         objList.Add(_objectTable[guid].Target);
                     else
                     {
-                        var obj = TransactionalObject.CreateTransactionalObject(type, objVal);
                         var reference = new WeakReference(obj);
                         _objectTable.Add(guid, reference);
                         objList.Add(obj);
@@ -208,7 +215,7 @@ namespace ObjectRepositoryImpl
             }
             catch (Exception e)
             {
-                _log.WriteEntry($"Get all objects of type {type} failure: {e.Message}", EventLogEntryType.Error);
+                _log.WriteEntry($"Get all objects of type {entityType} failure: {e.Message}", EventLogEntryType.Error);
                 throw;
             }
         }
