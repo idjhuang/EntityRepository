@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.Serialization;
 using ObjectResourceManager;
 
@@ -17,16 +16,16 @@ namespace EntityRepositoryContract
         public TransactionalEntity(SerializationInfo info, StreamingContext context)
         {
             _id = info.GetValue("Id", typeof (object));
-            Value = (T) info.GetValue("Value", typeof (T));
+            base.SetValue((T) info.GetValue("Value", typeof (T)));
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Id", _id, typeof (object));
-            info.AddValue("Value", Value, typeof(T));
+            info.AddValue("Value", GetValue(), typeof(T));
         }
 
-        protected override void SetValue(T t)
+        public new void SetValue(T t)
         {
             // check value's id
             if (!_id.Equals(t.Id)) throw new ArgumentException("object's id mismatch.");
@@ -39,10 +38,7 @@ namespace EntityRepositoryContract
         {
             // return a clone of value to prevent indirect update to object
             var value = base.GetValue(lockMode);
-            Debug.Assert(value != null);
-            var retVal = ResourceManager.Clone(value);
-            Debug.Assert(retVal != null);
-            return retVal;
+            return ResourceManager.Clone(value);
         }
 
         public void Update(T t)

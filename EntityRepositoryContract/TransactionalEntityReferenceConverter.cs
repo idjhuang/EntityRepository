@@ -8,7 +8,7 @@ namespace EntityRepositoryContract
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             dynamic entityReferene = value;
-            var id = (entityReferene.Reference == null) ? null : entityReferene.Reference.Value.Id;
+            var id = (entityReferene.Reference == null) ? null : entityReferene.Reference.GetValue().Id;
             serializer.Serialize(writer, id);
         }
 

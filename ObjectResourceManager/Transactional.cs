@@ -136,7 +136,7 @@ namespace ObjectResourceManager
             }
         }
 
-        protected virtual void SetValue(T t)
+        protected void SetValue(T t)
         {
             Lock(true);
             if (Transaction.Current == null)
@@ -180,7 +180,7 @@ namespace ObjectResourceManager
             return _temporaryValue.Value;
         }
 
-        public T Value
+        internal T Value
         {
             get { return GetValue(); }
             set { SetValue(value); }

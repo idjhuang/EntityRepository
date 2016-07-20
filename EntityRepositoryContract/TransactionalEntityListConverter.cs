@@ -12,7 +12,7 @@ namespace EntityRepositoryContract
             var targetList = new List<object>();
             foreach (dynamic o in entityList.List)
             {
-                var id = (o == null) ? null : o.Value.Id;
+                var id = (o == null) ? null : o.GetValue().Id;
                 targetList.Add(id);
             }
             serializer.Serialize(writer, targetList);

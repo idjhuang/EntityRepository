@@ -61,7 +61,7 @@ namespace EntityRepositoryImpl
         public void InsertEntity(object obj)
         {
             dynamic o = obj;
-            var entity = o.Value;
+            var entity = o.GetValue();
             if (!(entity is Entity)) throw new ArgumentException("object's value must be subclass of Entity.");
             var id = entity.Id;
             if (id == null) return;
@@ -90,7 +90,7 @@ namespace EntityRepositoryImpl
         public void UpdateEntity(object obj)
         {
             dynamic o = obj;
-            var entity = o.Value;
+            var entity = o.GetValue();
             if (!(entity is Entity)) throw new ArgumentException("object's value must be subclass of Entity.");
             var id = entity.Id;
             if (id == null) return;
@@ -121,7 +121,7 @@ namespace EntityRepositoryImpl
         public void DeleteEntity(object obj)
         {
             dynamic o = obj;
-            var entity = o.Value;
+            var entity = o.GetValue();
             if (!(entity is Entity)) throw new ArgumentException("object's value must be subclass of Entity.");
             var id = entity.Id;
             if (id == null) return;
