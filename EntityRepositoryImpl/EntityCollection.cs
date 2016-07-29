@@ -43,7 +43,7 @@ namespace EntityRepositoryImpl
                 if (tbl.Rows.Count == 0) throw new Exception($"Object Id: {id} not found.");
                 var row = tbl.Rows[0] as EntityRepository.EntityRepositoryRow;
                 if (row == null) throw new ArgumentException($"Object Id: {id} not found.");
-                var entityType = TypeRepository.GetType(row.Type);
+                var entityType = Type.GetType(row.Type);
                 if (entityType == null) throw new TypeAccessException($"Type {row.Type} not found.");
                 // Deserialize object value
                 var entity = JsonConvert.DeserializeObject(row.JSON, entityType);
@@ -79,7 +79,7 @@ namespace EntityRepositoryImpl
                 var adapter = new EntityRepositoryTableAdapter();
                 if (TransactionScopeUtil.DbConnection != null && TransactionScopeUtil.DbConnection.State == ConnectionState.Open)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
-                adapter.AddEntity(guid, entity.GetType().FullName, json);
+                adapter.AddEntity(guid, entity.GetType().AssemblyQualifiedName, json);
             }
             catch (Exception e)
             {
@@ -110,7 +110,7 @@ namespace EntityRepositoryImpl
                 var adapter = new EntityRepositoryTableAdapter();
                 if (TransactionScopeUtil.DbConnection != null && TransactionScopeUtil.DbConnection.State == ConnectionState.Open)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
-                adapter.AddEntity(guid, entity.GetType().FullName, json);
+                adapter.AddEntity(guid, entity.GetType().AssemblyQualifiedName, json);
             }
             catch (Exception e)
             {
@@ -169,7 +169,7 @@ namespace EntityRepositoryImpl
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
                 var typeTbl = adapter.GetAllTypes();
                 typeNameList.AddRange(from EntityRepository.EntityRepositoryRow row in typeTbl.Rows select row.Type);
-                typeList.AddRange(typeNameList.Select(TypeRepository.GetType));
+                typeList.AddRange(typeNameList.Select(Type.GetType));
                 return typeList;
             }
             catch (Exception e)
@@ -189,7 +189,7 @@ namespace EntityRepositoryImpl
                 var adapter = new EntityRepositoryTableAdapter();
                 if (TransactionScopeUtil.DbConnection != null && TransactionScopeUtil.DbConnection.State == ConnectionState.Open)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
-                var tbl = adapter.GetEntitiesByType(entityType.FullName);
+                var tbl = adapter.GetEntitiesByType(entityType.AssemblyQualifiedName);
                 foreach (EntityRepository.EntityRepositoryRow row in tbl.Rows)
                 {
                     var entity = JsonConvert.DeserializeObject(row.JSON, entityType);

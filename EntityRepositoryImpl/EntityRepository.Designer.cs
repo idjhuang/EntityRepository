@@ -433,7 +433,7 @@ namespace EntityRepositoryImpl {
                 this.columnId.AllowDBNull = false;
                 this.columnId.Unique = true;
                 this.columnType.AllowDBNull = false;
-                this.columnType.MaxLength = 260;
+                this.columnType.MaxLength = 512;
                 this.columnJSON.AllowDBNull = false;
                 this.columnJSON.MaxLength = 2147483647;
                 this.ExtendedProperties.Add("Generator_TablePropName", "_EntityRepository");

@@ -18,6 +18,8 @@ namespace TestWinForms
             CollectionRepository.Init();
             TaskRepository.Init();
             WorkflowRepository.Init();
+            TestWorkflow.Init(Properties.Settings.Default.EntityRepositoryConnStr);
+            TestWorkflow.InitData();
             _workflows = WorkflowRepository.GetAll();
         }
 

@@ -16,8 +16,6 @@ namespace TestWinForms
         public WorkflowForm()
         {
             InitializeComponent();
-            TestWorkflow.Init(Properties.Settings.Default.EntityRepositoryConnStr);
-            TestWorkflow.InitData();
             _workflowContexts = new BindingList<WorkflowContext>(WorkflowRepository.GetAll().Select(w => w.GetEntity()).ToList());
             workflowList.DataSource = _workflowContexts;
             workflowList.DisplayMember = "Name";
@@ -58,6 +56,11 @@ namespace TestWinForms
         {
             var workflow = WorkflowRepository.Create("Test", workflowName.Text);
             _workflowContexts.Add(workflow.GetEntity());
+        }
+
+        private void workflowTimeout_Tick(object sender, EventArgs e)
+        {
+            WorkflowRepository.ProcessTimeout();
         }
     }
 }

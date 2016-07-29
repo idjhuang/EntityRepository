@@ -120,14 +120,14 @@ ELSE
   <xs:element name="EntityRepository" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="EntityRepository" msprop:Generator_UserDSName="EntityRepository">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="EntityRepository" msprop:Generator_TableClassName="EntityRepositoryDataTable" msprop:Generator_TableVarName="tableEntityRepository" msprop:Generator_TablePropName="_EntityRepository" msprop:Generator_RowDeletingName="EntityRepositoryRowDeleting" msprop:Generator_RowChangingName="EntityRepositoryRowChanging" msprop:Generator_RowEvHandlerName="EntityRepositoryRowChangeEventHandler" msprop:Generator_RowDeletedName="EntityRepositoryRowDeleted" msprop:Generator_UserTableName="EntityRepository" msprop:Generator_RowChangedName="EntityRepositoryRowChanged" msprop:Generator_RowEvArgName="EntityRepositoryRowChangeEvent" msprop:Generator_RowClassName="EntityRepositoryRow">
+        <xs:element name="EntityRepository" msprop:Generator_TableClassName="EntityRepositoryDataTable" msprop:Generator_TableVarName="tableEntityRepository" msprop:Generator_RowChangedName="EntityRepositoryRowChanged" msprop:Generator_TablePropName="_EntityRepository" msprop:Generator_RowDeletingName="EntityRepositoryRowDeleting" msprop:Generator_RowChangingName="EntityRepositoryRowChanging" msprop:Generator_RowEvHandlerName="EntityRepositoryRowChangeEventHandler" msprop:Generator_RowDeletedName="EntityRepositoryRowDeleted" msprop:Generator_RowClassName="EntityRepositoryRow" msprop:Generator_UserTableName="EntityRepository" msprop:Generator_RowEvArgName="EntityRepositoryRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Id" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnId" msprop:Generator_ColumnPropNameInRow="Id" msprop:Generator_ColumnPropNameInTable="IdColumn" msprop:Generator_UserColumnName="Id" type="xs:string" />
               <xs:element name="Type" msprop:Generator_ColumnVarNameInTable="columnType" msprop:Generator_ColumnPropNameInRow="Type" msprop:Generator_ColumnPropNameInTable="TypeColumn" msprop:Generator_UserColumnName="Type">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
-                    <xs:maxLength value="260" />
+                    <xs:maxLength value="512" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

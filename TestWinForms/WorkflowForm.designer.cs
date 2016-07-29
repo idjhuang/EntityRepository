@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.workflowList = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -38,6 +39,7 @@
             this.abortBtn = new System.Windows.Forms.Button();
             this.doneBtn = new System.Windows.Forms.Button();
             this.parameter = new System.Windows.Forms.TextBox();
+            this.workflowTimeout = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // workflowList
@@ -130,6 +132,12 @@
             this.parameter.Size = new System.Drawing.Size(179, 22);
             this.parameter.TabIndex = 3;
             // 
+            // workflowTimeout
+            // 
+            this.workflowTimeout.Enabled = true;
+            this.workflowTimeout.Interval = 120000;
+            this.workflowTimeout.Tick += new System.EventHandler(this.workflowTimeout_Tick);
+            // 
             // WorkflowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -164,6 +172,7 @@
         private System.Windows.Forms.Button abortBtn;
         private System.Windows.Forms.Button doneBtn;
         private System.Windows.Forms.TextBox parameter;
+        private System.Windows.Forms.Timer workflowTimeout;
     }
 }
 

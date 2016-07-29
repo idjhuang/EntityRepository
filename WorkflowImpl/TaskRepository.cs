@@ -30,7 +30,7 @@ namespace WorkflowImpl
 
         public static void AddTask(ITask task)
         {
-            if (!Tasks.ContainsKey(task.GetType().FullName)) Tasks.Add(task.GetType().FullName, task);
+            if (!Tasks.ContainsKey(task.GetType().AssemblyQualifiedName)) Tasks.Add(task.GetType().AssemblyQualifiedName, task);
         }
 
         public static ITask GetTask(string taskName)

@@ -2,7 +2,6 @@
 using EntityRepository;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Workflow;
 
 namespace WorkflowImpl
@@ -11,9 +10,8 @@ namespace WorkflowImpl
     {
         private static IList<TransactionalEntity<WorkflowContext>> _workflows;
         private static ICollection _workflowCollection;
-        private static Timer _checkTimeoutTimer;
 
-        public static void Init(TimeSpan checkTimeoutPeriod = default(TimeSpan))
+        public static void Init()
         {
             // get collection of workflow
             _workflowCollection = CollectionRepository.GetCollection(typeof (WorkflowContext));
@@ -31,23 +29,23 @@ namespace WorkflowImpl
             {
                 Done(doneWorkflow);
             }
-            checkTimeoutPeriod = (checkTimeoutPeriod == default(TimeSpan)) ? new TimeSpan(1, 0, 0) : checkTimeoutPeriod;
-            _checkTimeoutTimer = new Timer(CheckTimeout, null, new TimeSpan(0, 0, 0), checkTimeoutPeriod);
+            // process timeout workflows
+            ProcessTimeout();
         }
 
-        public static void SetCheckTimeoutPeriod(TimeSpan period)
-        {
-            _checkTimeoutTimer.Change(period, period);
-        }
-
-        private static void CheckTimeout(object state)
+        public static void ProcessTimeout()
         {
             // retrieve timeout workflows
-            var timeoutWorkflows = _workflows.Where(w => w.GetEntity().Deadline <= DateTime.Now);
+            var workflowEntities = _workflows.Select(w => w.GetEntity()).ToList();
+            var timeoutWorkflows =
+                workflowEntities.Where(
+                    w =>
+                        w.Deadline.CompareTo(DateTime.Now) < 0 && w.Status != WorkflowStatus.Abort &&
+                        w.Status != WorkflowStatus.Done).ToList();
             // abort timeout workflows
             foreach (var workflow in timeoutWorkflows)
             {
-                Abort((Guid) workflow.GetEntity().Id);
+                Abort((Guid) workflow.Id);
             }
         }
 

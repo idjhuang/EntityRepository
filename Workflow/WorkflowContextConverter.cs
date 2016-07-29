@@ -12,7 +12,9 @@ namespace Workflow
             public Guid Id { get; set; }
             public string User { get; set; }
             public string Name { get; set; }
-            public Dictionary<string, object> State { get; set; } 
+            public List<string> StateKeys { get; set; }
+            public List<string> StateValuesType { get; set; }
+            public List<string> StateValuesJson { get; set; }
             public string Message { get; set; }
             public string NextTask { get; set; }
             public int Status { get; set; }
@@ -27,13 +29,21 @@ namespace Workflow
                 Id = (Guid) context.Id,
                 User = context.User,
                 Name = context.Name,
-                State = context.State,
+                StateKeys = new List<string>(),
+                StateValuesType = new List<string>(),
+                StateValuesJson = new List<string>(),
                 Message = context.Message,
                 NextTask = context.NextTask,
                 Status = (int) context.Status,
                 Deadline = context.Deadline,
                 ExecutionRecords = context.ExecutionRecords.ToList()
             };
+            foreach (var keyValue in context.State)
+            {
+                package.StateKeys.Add(keyValue.Key);
+                package.StateValuesType.Add(keyValue.Value.GetType().AssemblyQualifiedName);
+                package.StateValuesJson.Add(JsonConvert.SerializeObject(keyValue.Value));
+            }
             serializer.Serialize(writer, package);
         }
 
@@ -47,9 +57,13 @@ namespace Workflow
                 Status = (WorkflowStatus) package.Status,
                 Deadline = package.Deadline
             };
-            foreach (var key in package.State.Keys)
+            for (var i = 0; i < package.StateKeys.Count; i++)
             {
-                context.State.Add(key, package.State[key]);
+                var key = package.StateKeys[i];
+                var json = package.StateValuesJson[i];
+                var type = Type.GetType(package.StateValuesType[i]);
+                context.State.Add(key,
+                    JsonConvert.DeserializeObject(json, type));
             }
             package.ExecutionRecords.Reverse();
             foreach (var record in package.ExecutionRecords)

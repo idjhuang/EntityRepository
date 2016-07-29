@@ -120,7 +120,7 @@ namespace Test
             }
         }
 
-        public string Name => GetType().FullName;
+        public string Name => GetType().AssemblyQualifiedName;
 
         public void Execute(WorkflowContext context, TaskExecutionRecord execRecord, object parameters)
         {
@@ -259,7 +259,7 @@ namespace Test
             }
         }
 
-        public string Name => GetType().FullName;
+        public string Name => GetType().AssemblyQualifiedName;
 
         public void Execute(WorkflowContext context, TaskExecutionRecord execRecord, object parameters)
         {
@@ -344,7 +344,7 @@ namespace Test
             }
         }
 
-        public string Name => GetType().FullName;
+        public string Name => GetType().AssemblyQualifiedName;
 
         public void Execute(WorkflowContext context, TaskExecutionRecord execRecord, object parameters)
         {

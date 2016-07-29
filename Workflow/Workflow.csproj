@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ITask.cs" />
     <Compile Include="TaskExecutionRecord.cs" />
+    <Compile Include="TaskExecutionRecordConvertor.cs" />
     <Compile Include="WorkflowContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkflowContextConverter.cs" />
