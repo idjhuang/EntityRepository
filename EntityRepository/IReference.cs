@@ -1,4 +1,4 @@
-﻿namespace EntityRepositoryContract
+﻿namespace EntityRepository
 {
     public interface IReference
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using EntityRepositoryContract;
+using EntityRepository;
 
 namespace Test
 {
@@ -29,7 +29,7 @@ namespace Test
                     SimpleList = new TransactionalEntityList<Simple>(),
                     IntProperty = 123
                 });
-            var val = objList.GetValue();
+            var val = objList.GetEntity();
             val.SimpleList.Add(simple_1);
             val.SimpleList.Add(simple_2);
             val.SimpleList.Add(simple_3);
@@ -41,14 +41,14 @@ namespace Test
         {
             var simpleList = CollectionRepository.GetCollection(typeof(Simple)).GetAllEntities(typeof(Simple));
             var simple = simpleList[1] as TransactionalEntity<Simple>;
-            var simple1 = CollectionRepository.GetCollection(typeof (Simple)).GetEntity(simple.GetValue().Id) as TransactionalEntity<Simple>;
-            Debug.Print($"simple1.GetValue().StrProperty: {simple1.GetValue().StrProperty}");
+            var simple1 = CollectionRepository.GetCollection(typeof (Simple)).GetEntity(simple.GetEntity().Id) as TransactionalEntity<Simple>;
+            Debug.Print($"simple1.GetEntity().StrProperty: {simple1.GetEntity().StrProperty}");
             var containerList = CollectionRepository.GetCollection(typeof(Container)).GetAllEntities(typeof(Container));
             var container = containerList[0] as TransactionalEntity<Container>;
-            Debug.Print($"container.GetValue().StrProperty: {container.GetValue().StrProperty}");
+            Debug.Print($"container.GetEntity().StrProperty: {container.GetEntity().StrProperty}");
             var objListList = CollectionRepository.GetCollection(typeof(ObjList)).GetAllEntities(typeof(ObjList));
             var objList = objListList[0] as TransactionalEntity<ObjList>;
-            Debug.Print($"objList.GetValue().SimpleList[0].GetValue().StrProperty: {objList.GetValue().SimpleList[0].GetValue().StrProperty}");
+            Debug.Print($"objList.GetEntity().SimpleList[0].GetEntity().StrProperty: {objList.GetEntity().SimpleList[0].GetEntity().StrProperty}");
             Debug.Print("Done");
         }
 
@@ -60,10 +60,10 @@ namespace Test
             d.IntProp = 123456;
             dynamic obj = TransactionalEntity.CreateTransactionalEntity(type, d);
             obj.Update();
-            dynamic entity = obj.GetValue();
+            dynamic entity = obj.GetEntity();
             Debug.Print($"entity.StrProp: {entity.StrProp}");
             dynamic m1 = CollectionRepository.GetCollection(type).GetEntity(entity.Id, true);
-            Debug.Print($"m1.GetValue().StrProp: {m1.GetValue().StrProp}");
+            Debug.Print($"m1.GetEntity().StrProp: {m1.GetEntity().StrProp}");
             Debug.Print("Done!");
         }
 
@@ -72,36 +72,36 @@ namespace Test
             var simpleList = CollectionRepository.GetCollection(typeof(Simple)).GetAllEntities(typeof(Simple));
             var simple0 = simpleList[0] as TransactionalEntity<Simple>;
             var simple1 = simpleList[1] as TransactionalEntity<Simple>;
-            var origIntProperty = simple0.GetValue().IntProperty;
-            var origStrProperty = simple1.GetValue().StrProperty;
+            var origIntProperty = simple0.GetEntity().IntProperty;
+            var origStrProperty = simple1.GetEntity().StrProperty;
             Debug.Print("Before Transaction");
-            Debug.Print($"simple0.GetValue().IntProperty: {simple0.GetValue().IntProperty}");
-            Debug.Print($"simple1.GetValue().StrProperty: {simple1.GetValue().StrProperty}");
+            Debug.Print($"simple0.GetEntity().IntProperty: {simple0.GetEntity().IntProperty}");
+            Debug.Print($"simple1.GetEntity().StrProperty: {simple1.GetEntity().StrProperty}");
             using (var ts = TransactionScopeUtil.GetTransactionScope())
             using (var dbConn = TransactionScopeUtil.CreateDbConnection(connStr))
             {
                 dbConn.Open();
                 // retrieve object's value
-                var v1 = simple0.GetValue();
-                var v2 = simple1.GetValue();
+                var v1 = simple0.GetEntity();
+                var v2 = simple1.GetEntity();
                 // change value (would not affect object)
                 v1.IntProperty++;
                 v2.StrProperty = "Updated!";
                 Debug.Print("After change value");
-                Debug.Print($"simple0.GetValue().IntProperty: {simple0.GetValue().IntProperty}");
-                Debug.Print($"simple1.GetValue().StrProperty: {simple1.GetValue().StrProperty}");
+                Debug.Print($"simple0.GetEntity().IntProperty: {simple0.GetEntity().IntProperty}");
+                Debug.Print($"simple1.GetEntity().StrProperty: {simple1.GetEntity().StrProperty}");
                 // update object's value
-                simple0.SetValue(v1);
-                simple1.SetValue(v2);
+                simple0.SetEntity(v1);
+                simple1.SetEntity(v2);
                 // update to collection
                 TransactionScopeUtil.UpdateAll();
                 Debug.Print("After update object");
-                Debug.Print($"simple0.GetValue().IntProperty: {simple0.GetValue().IntProperty}");
-                Debug.Print($"simple1.GetValue().StrProperty: {simple1.GetValue().StrProperty}");
+                Debug.Print($"simple0.GetEntity().IntProperty: {simple0.GetEntity().IntProperty}");
+                Debug.Print($"simple1.GetEntity().StrProperty: {simple1.GetEntity().StrProperty}");
             }
             Debug.Print("After Rollback");
-            Debug.Print($"simple0.GetValue().IntProperty: {simple0.GetValue().IntProperty}");
-            Debug.Print($"simple1.GetValue().StrProperty: {simple1.GetValue().StrProperty}");
+            Debug.Print($"simple0.GetEntity().IntProperty: {simple0.GetEntity().IntProperty}");
+            Debug.Print($"simple1.GetEntity().StrProperty: {simple1.GetEntity().StrProperty}");
             try
             {
                 using (var ts = TransactionScopeUtil.GetTransactionScope())
@@ -109,21 +109,21 @@ namespace Test
                 {
                     dbConn.Open();
                     // retrieve object's value
-                    var v1 = simple0.GetValue();
-                    var v2 = simple1.GetValue();
+                    var v1 = simple0.GetEntity();
+                    var v2 = simple1.GetEntity();
                     // change value (would not affect object)
                     v1.IntProperty++;
                     v2.StrProperty = "Updated!";
                     // update object's value
-                    simple0.SetValue(v1);
-                    simple1.SetValue(v2);
+                    simple0.SetEntity(v1);
+                    simple1.SetEntity(v2);
                     // update to collection
                     TransactionScopeUtil.UpdateAll();
                     ts.Complete();
                 }
                 Debug.Print("After Commit");
-                Debug.Print($"simple0.GetValue().IntProperty: {simple0.GetValue().IntProperty}");
-                Debug.Print($"simple1.GetValue().StrProperty: {simple1.GetValue().StrProperty}");
+                Debug.Print($"simple0.GetEntity().IntProperty: {simple0.GetEntity().IntProperty}");
+                Debug.Print($"simple1.GetEntity().StrProperty: {simple1.GetEntity().StrProperty}");
             }
             catch (Exception e)
             {
@@ -131,14 +131,14 @@ namespace Test
             }
             // set value back to original without transaction
             // retrieve object's value
-            var val1 = simple0.GetValue();
-            var val2 = simple1.GetValue();
+            var val1 = simple0.GetEntity();
+            var val2 = simple1.GetEntity();
             // change value (would not affect object)
             val1.IntProperty = origIntProperty;
             val2.StrProperty = origStrProperty;
             // update object's value
-            simple0.SetValue(val1);
-            simple1.SetValue(val2);
+            simple0.SetEntity(val1);
+            simple1.SetEntity(val2);
             // update to collection
             TransactionScopeUtil.UpdateAll();
             Debug.Print("Done!");

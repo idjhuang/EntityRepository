@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Transactions;
 using ObjectResourceManager;
 
-namespace EntityRepositoryContract
+namespace EntityRepository
 {
     public static class TransactionScopeUtil
     {

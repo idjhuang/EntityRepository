@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using IDesign.System.Collections.Transactional;
 using Newtonsoft.Json;
 
-namespace EntityRepositoryContract
+namespace EntityRepository
 {
     [Serializable]
     [JsonConverter(typeof(TransactionalEntityListConverter))]
@@ -12,11 +12,18 @@ namespace EntityRepositoryContract
     {
         internal List<TransactionalEntity<T>> List;
         internal List<object> TargetList;
-        internal bool Loaded = true;
+        internal bool Loaded;
 
         public TransactionalEntityList()
         {
             List = new List<TransactionalEntity<T>>();
+            Loaded = true;
+        }
+
+        public TransactionalEntityList(List<object> tragetList)
+        {
+            TargetList = tragetList;
+            Loaded = false;
         }
 
         public IEnumerator<TransactionalEntity<T>> GetEnumerator()
@@ -39,6 +46,7 @@ namespace EntityRepositoryContract
 
         public void Clear()
         {
+            if (!Loaded) SetReference();
             List.Clear();
         }
 
@@ -60,7 +68,15 @@ namespace EntityRepositoryContract
             return List.Remove(item);
         }
 
-        public int Count => List.Count;
+        public int Count
+        {
+            get
+            {
+                if (!Loaded) SetReference();
+                return List.Count;
+            }
+        }
+
         public bool IsReadOnly => false;
 
         public int IndexOf(TransactionalEntity<T> item)

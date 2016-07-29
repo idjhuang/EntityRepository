@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EntityRepositoryContract.Properties {
+namespace EntityRepository.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

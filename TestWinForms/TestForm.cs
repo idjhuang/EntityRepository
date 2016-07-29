@@ -1,16 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
-using EntityRepositoryContract;
+using EntityRepository;
 using Test;
+using Workflow;
+using WorkflowImpl;
 
 namespace TestWinForms
 {
     public partial class TestForm : Form
     {
+        private IList<TransactionalEntity<WorkflowContext>> _workflows;
         public TestForm()
         {
             InitializeComponent();
             CollectionRepository.Init();
+            TaskRepository.Init();
+            WorkflowRepository.Init();
+            _workflows = WorkflowRepository.GetAll();
         }
 
         private void startBtn_Click(object sender, EventArgs e)
@@ -32,6 +40,16 @@ namespace TestWinForms
                     break;
                 case "MultiTask":
                     TestCases.MultiTask(Properties.Settings.Default.EntityRepositoryConnStr);
+                    break;
+                case "School-Create":
+                    SchoolModels.BusinessMethods.CreateEntities();
+                    break;
+                case "School-Load":
+                    SchoolModels.BusinessMethods.LoadEntities();
+                    break;
+                case "Workflow":
+                    var form = new WorkflowForm();
+                    form.ShowDialog();
                     break;
             }
         }

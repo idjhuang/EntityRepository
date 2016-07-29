@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EntityRepositoryContract
+namespace EntityRepository
 {
     [Serializable]
     public class Entity

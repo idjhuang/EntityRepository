@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EntityRepositoryContract
+namespace EntityRepository
 {
     public interface ICollection
     {

@@ -153,7 +153,7 @@ namespace ObjectResourceManager
             }
         }
 
-        public virtual T GetValue(LockMode lockMode = LockMode.Normal)
+        protected T GetValue(LockMode lockMode = LockMode.Normal)
         {
             if (Transaction.Current == null)
             {

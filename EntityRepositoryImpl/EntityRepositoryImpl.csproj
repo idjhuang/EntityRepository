@@ -77,9 +77,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityRepositoryContract\EntityRepositoryContract.csproj">
+    <ProjectReference Include="..\EntityRepository\EntityRepository.csproj">
       <Project>{8ff8f9f7-aa61-4b39-afd2-3f8292eb7da0}</Project>
-      <Name>EntityRepositoryContract</Name>
+      <Name>EntityRepository</Name>
     </ProjectReference>
     <ProjectReference Include="..\ObjectResourceManager\ObjectResourceManager.csproj">
       <Project>{6589be3f-2f40-48be-8633-9df43d0623fa}</Project>

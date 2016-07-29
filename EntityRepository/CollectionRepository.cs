@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EntityRepositoryContract
+namespace EntityRepository
 {
     public static class CollectionRepository
     {

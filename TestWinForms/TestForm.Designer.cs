@@ -51,7 +51,10 @@
             "Load",
             "Extension",
             "Transaction",
-            "MultiTask"});
+            "MultiTask",
+            "School-Create",
+            "School-Load",
+            "Workflow"});
             this.testCase.Location = new System.Drawing.Point(13, 14);
             this.testCase.Name = "testCase";
             this.testCase.Size = new System.Drawing.Size(178, 20);

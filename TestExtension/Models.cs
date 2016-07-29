@@ -1,5 +1,5 @@
 ﻿using System;
-using EntityRepositoryContract;
+using EntityRepository;
 
 namespace TestExtension
 {

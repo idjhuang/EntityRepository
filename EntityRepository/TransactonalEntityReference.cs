@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace EntityRepositoryContract
+namespace EntityRepository
 {
     [Serializable]
     [JsonConverter(typeof(TransactionalEntityReferenceConverter))]
@@ -9,11 +9,18 @@ namespace EntityRepositoryContract
     {
         private TransactionalEntity<T> _reference;
         internal object Target;
-        internal bool Loaded = true;
+        internal bool Loaded;
 
         public TransactionalEntityReference(TransactionalEntity<T> reference = null)
         {
             _reference = reference;
+            Loaded = true;
+        }
+
+        public TransactionalEntityReference(object target)
+        {
+            Target = target;
+            Loaded = false;
         }
 
         public TransactionalEntity<T> Reference

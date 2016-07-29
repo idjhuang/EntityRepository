@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using ObjectResourceManager;
 
-namespace EntityRepositoryContract
+namespace EntityRepository
 {
     [Serializable]
     public class TransactionalEntity<T> : Transactional<T>, ISerializable where T : Entity
@@ -16,7 +16,7 @@ namespace EntityRepositoryContract
         public TransactionalEntity(SerializationInfo info, StreamingContext context)
         {
             _id = info.GetValue("Id", typeof (object));
-            base.SetValue((T) info.GetValue("Value", typeof (T)));
+            SetValue((T) info.GetValue("Value", typeof (T)));
         }
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -25,16 +25,21 @@ namespace EntityRepositoryContract
             info.AddValue("Value", GetValue(), typeof(T));
         }
 
-        public new void SetValue(T t)
+        internal T GetValue()
+        {
+            return base.GetValue();
+        }
+
+        public void SetEntity(T t)
         {
             // check value's id
             if (!_id.Equals(t.Id)) throw new ArgumentException("object's id mismatch.");
             // track updated bojects
             TransactionScopeUtil.MarkForUpdate(this);
-            base.SetValue(t);
+            SetValue(t);
         }
 
-        public override T GetValue(LockMode lockMode = LockMode.Normal)
+        public T GetEntity(LockMode lockMode = LockMode.Normal)
         {
             // return a clone of value to prevent indirect update to object
             var value = base.GetValue(lockMode);
@@ -45,7 +50,7 @@ namespace EntityRepositoryContract
         {
             // check value's id
             if (!_id.Equals(t.Id)) throw new ArgumentException("object's id mismatch.");
-            base.SetValue(t);
+            SetValue(t);
             Update();
         }
 

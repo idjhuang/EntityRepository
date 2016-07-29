@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace EntityRepositoryContract
+namespace EntityRepository
 {
     public class TransactionalEntityReferenceConverter : JsonConverter
     {

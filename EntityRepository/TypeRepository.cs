@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
-namespace EntityRepositoryContract
+namespace EntityRepository
 {
     public static class TypeRepository
     {

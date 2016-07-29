@@ -250,9 +250,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityRepositoryContract\EntityRepositoryContract.csproj">
+    <ProjectReference Include="..\EntityRepository\EntityRepository.csproj">
       <Project>{8ff8f9f7-aa61-4b39-afd2-3f8292eb7da0}</Project>
-      <Name>EntityRepositoryContract</Name>
+      <Name>EntityRepository</Name>
     </ProjectReference>
     <ProjectReference Include="..\EntityRepositoryImpl\EntityRepositoryImpl.csproj">
       <Project>{d82495d3-8e9c-4c1e-bd54-7282cd84e5a0}</Project>
