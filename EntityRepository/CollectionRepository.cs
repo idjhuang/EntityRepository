@@ -9,8 +9,11 @@ namespace EntityRepository
         private static readonly Dictionary<Type, ICollection> Collections = new Dictionary<Type, ICollection>();
         private static readonly List<IReference> References = new List<IReference>();
 
+        public static Dictionary<Type, DateTime> LastUpdateTime { get; }    // track update time of each entity type
+
         static CollectionRepository()
         {
+            LastUpdateTime = new Dictionary<Type, DateTime>();
         }
 
         public static void Init()
@@ -30,9 +33,10 @@ namespace EntityRepository
 
         public static void AddCollection(ICollection collection)
         {
-            foreach (var type in collection.SupportedTypes())
+            foreach (var type in collection.SupportedTypes().Where(type => !Collections.ContainsKey(type)))
             {
                 Collections.Add(type, collection);
+                LastUpdateTime.Add(type, DateTime.MinValue);
             }
         }
 

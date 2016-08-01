@@ -40,6 +40,7 @@
             this.doneBtn = new System.Windows.Forms.Button();
             this.parameter = new System.Windows.Forms.TextBox();
             this.workflowTimeout = new System.Windows.Forms.Timer(this.components);
+            this.revokeBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // workflowList
@@ -90,14 +91,14 @@
             // 
             // workflowName
             // 
-            this.workflowName.Location = new System.Drawing.Point(12, 158);
+            this.workflowName.Location = new System.Drawing.Point(12, 187);
             this.workflowName.Name = "workflowName";
             this.workflowName.Size = new System.Drawing.Size(179, 22);
             this.workflowName.TabIndex = 3;
             // 
             // createBtn
             // 
-            this.createBtn.Location = new System.Drawing.Point(197, 158);
+            this.createBtn.Location = new System.Drawing.Point(197, 187);
             this.createBtn.Name = "createBtn";
             this.createBtn.Size = new System.Drawing.Size(75, 23);
             this.createBtn.TabIndex = 2;
@@ -107,7 +108,7 @@
             // 
             // abortBtn
             // 
-            this.abortBtn.Location = new System.Drawing.Point(197, 129);
+            this.abortBtn.Location = new System.Drawing.Point(197, 158);
             this.abortBtn.Name = "abortBtn";
             this.abortBtn.Size = new System.Drawing.Size(75, 23);
             this.abortBtn.TabIndex = 2;
@@ -117,7 +118,7 @@
             // 
             // doneBtn
             // 
-            this.doneBtn.Location = new System.Drawing.Point(197, 100);
+            this.doneBtn.Location = new System.Drawing.Point(197, 129);
             this.doneBtn.Name = "doneBtn";
             this.doneBtn.Size = new System.Drawing.Size(75, 23);
             this.doneBtn.TabIndex = 2;
@@ -138,16 +139,27 @@
             this.workflowTimeout.Interval = 120000;
             this.workflowTimeout.Tick += new System.EventHandler(this.workflowTimeout_Tick);
             // 
+            // revokeBtn
+            // 
+            this.revokeBtn.Location = new System.Drawing.Point(197, 100);
+            this.revokeBtn.Name = "revokeBtn";
+            this.revokeBtn.Size = new System.Drawing.Size(75, 23);
+            this.revokeBtn.TabIndex = 2;
+            this.revokeBtn.Text = "Revoke Task";
+            this.revokeBtn.UseVisualStyleBackColor = true;
+            this.revokeBtn.Click += new System.EventHandler(this.revokeBtn_Click);
+            // 
             // WorkflowForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 195);
+            this.ClientSize = new System.Drawing.Size(284, 219);
             this.Controls.Add(this.parameter);
             this.Controls.Add(this.workflowName);
             this.Controls.Add(this.createBtn);
             this.Controls.Add(this.abortBtn);
             this.Controls.Add(this.doneBtn);
+            this.Controls.Add(this.revokeBtn);
             this.Controls.Add(this.execBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -173,6 +185,7 @@
         private System.Windows.Forms.Button doneBtn;
         private System.Windows.Forms.TextBox parameter;
         private System.Windows.Forms.Timer workflowTimeout;
+        private System.Windows.Forms.Button revokeBtn;
     }
 }
 

@@ -120,7 +120,7 @@ namespace Test
             }
         }
 
-        public string Name => GetType().AssemblyQualifiedName;
+        public string Name => GetType().FullName;
 
         public void Execute(WorkflowContext context, TaskExecutionRecord execRecord, object parameters)
         {

@@ -53,6 +53,7 @@ namespace EntityRepository
             try
             {
                 InsertEntityImpl(entity);
+                CollectionRepository.LastUpdateTime[typeof(T)] = DateTime.Now;
             }
             catch (Exception e)
             {
@@ -76,6 +77,7 @@ namespace EntityRepository
             try
             {
                 UpdateEntityImpl(entity);
+                CollectionRepository.LastUpdateTime[typeof(T)] = DateTime.Now;
             }
             catch (Exception e)
             {
@@ -95,6 +97,7 @@ namespace EntityRepository
             try
             {
                 DeleteEntityImpl(entity);
+                CollectionRepository.LastUpdateTime[typeof(T)] = DateTime.Now;
             }
             catch (Exception e)
             {

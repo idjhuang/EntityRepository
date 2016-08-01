@@ -8,6 +8,7 @@ namespace Workflow
     public enum WorkflowStatus
     {
         Ready,
+        Executing,
         Failed,
         Abort,
         Done

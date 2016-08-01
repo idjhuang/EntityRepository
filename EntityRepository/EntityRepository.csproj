@@ -49,6 +49,7 @@
     <Compile Include="Entity.cs" />
     <Compile Include="IReference.cs" />
     <Compile Include="ICollection.cs" />
+    <Compile Include="Query.cs" />
     <Compile Include="TransactionalEntityCollection.cs" />
     <Compile Include="TransactionalEntityListConverter.cs" />
     <Compile Include="TransactionalEntityReferenceConverter.cs" />

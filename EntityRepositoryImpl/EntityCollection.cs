@@ -80,6 +80,7 @@ namespace EntityRepositoryImpl
                 if (TransactionScopeUtil.DbConnection != null && TransactionScopeUtil.DbConnection.State == ConnectionState.Open)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
                 adapter.AddEntity(guid, entity.GetType().AssemblyQualifiedName, json);
+                CollectionRepository.LastUpdateTime[entity.GetType()] = DateTime.Now;
             }
             catch (Exception e)
             {
@@ -111,6 +112,7 @@ namespace EntityRepositoryImpl
                 if (TransactionScopeUtil.DbConnection != null && TransactionScopeUtil.DbConnection.State == ConnectionState.Open)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
                 adapter.AddEntity(guid, entity.GetType().AssemblyQualifiedName, json);
+                CollectionRepository.LastUpdateTime[entity.GetType()] = DateTime.Now;
             }
             catch (Exception e)
             {
@@ -137,6 +139,7 @@ namespace EntityRepositoryImpl
                 if (TransactionScopeUtil.DbConnection != null && TransactionScopeUtil.DbConnection.State == ConnectionState.Open)
                     adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
                 adapter.DeleteEntity(guid);
+                CollectionRepository.LastUpdateTime[entity.GetType()] = DateTime.Now;
             }
             catch (Exception e)
             {

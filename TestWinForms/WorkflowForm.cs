@@ -40,16 +40,24 @@ namespace TestWinForms
             }
         }
 
+        private void revokeBtn_Click(object sender, EventArgs e)
+        {
+            var workflow = workflowList.SelectedItem as WorkflowContext;
+            WorkflowRepository.Revoke((Guid)workflow.Id);
+        }
+
         private void doneBtn_Click(object sender, EventArgs e)
         {
             var workflow = workflowList.SelectedItem as WorkflowContext;
             WorkflowRepository.Done((Guid)workflow.Id);
+            _workflowContexts.Remove(workflow);
         }
 
         private void abortBtn_Click(object sender, EventArgs e)
         {
             var workflow = workflowList.SelectedItem as WorkflowContext;
             WorkflowRepository.Abort((Guid) workflow.Id);
+            _workflowContexts.Remove(workflow);
         }
 
         private void createBtn_Click(object sender, EventArgs e)

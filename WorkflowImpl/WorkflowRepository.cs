@@ -81,6 +81,8 @@ namespace WorkflowImpl
             if (task == null) throw new ArgumentException($"Task ({taskName}) not found.");
             var contextEntity = context.GetEntity();
             if (contextEntity.Status != WorkflowStatus.Ready) throw new ArgumentException($"Workflow ({contextEntity.Id}) not ready.");
+            contextEntity.Status = WorkflowStatus.Executing;
+            context.SetEntity(contextEntity);
             var deadline = contextEntity.Deadline;
             var execRecord = new TaskExecutionRecord
             {
@@ -102,7 +104,9 @@ namespace WorkflowImpl
                 case WorkflowStatus.Done:
                     Done(context);
                     return;
+                case WorkflowStatus.Executing:
                 case WorkflowStatus.Ready:
+                    contextEntity.Status = WorkflowStatus.Ready;
                     contextEntity.ExecutionRecords.Push(execRecord);
                     break;
                 case WorkflowStatus.Failed:
@@ -113,11 +117,27 @@ namespace WorkflowImpl
             context.Update(contextEntity);
         }
 
+        public static void Revoke(Guid workflowId)
+        {
+            var context = _workflowCollection.GetEntity(workflowId) as TransactionalEntity<WorkflowContext>;
+            if (context == null) throw new ArgumentException($"Workflow ({workflowId}) not found.");
+            var contextEntity = context.GetEntity();
+            if (contextEntity.Status != WorkflowStatus.Ready) throw new ArgumentException($"Workflow ({contextEntity.Id}) not ready.");
+            if (contextEntity.ExecutionRecords.Count == 0) return;
+            contextEntity.Status = WorkflowStatus.Abort;
+            var execRecord = contextEntity.ExecutionRecords.Peek();
+            TaskRepository.ExecuteTask(execRecord.Task, contextEntity, execRecord, execRecord.Parameters);
+            contextEntity.Status = WorkflowStatus.Ready;
+            contextEntity.ExecutionRecords.Pop();
+            context.Update(contextEntity);
+        }
+
         public static void Done(Guid workflowId)
         {
             var context = _workflowCollection.GetEntity(workflowId) as TransactionalEntity<WorkflowContext>;
             if (context == null) throw new ArgumentException($"Workflow ({workflowId}) not found.");
             var contextEntity = context.GetEntity();
+            if (contextEntity.Status != WorkflowStatus.Ready) throw new ArgumentException($"Workflow ({contextEntity.Id}) not ready.");
             contextEntity.Status = WorkflowStatus.Done;
             context.Update(contextEntity);
             Done(context);
@@ -137,6 +157,7 @@ namespace WorkflowImpl
             var context = _workflowCollection.GetEntity(workflowId) as TransactionalEntity<WorkflowContext>;
             if (context == null) throw new ArgumentException($"Workflow ({workflowId}) not found.");
             var contextEntity = context.GetEntity();
+            if (contextEntity.Status != WorkflowStatus.Ready) throw new ArgumentException($"Workflow ({contextEntity.Id}) not ready.");
             contextEntity.Status = WorkflowStatus.Abort;
             context.Update(contextEntity);
             Abort(context);
