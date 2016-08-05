@@ -5,41 +5,62 @@ using System.Linq;
 
 namespace EntityRepository
 {
-    public abstract class TransactionalEntityCollection<T, TId> : ICollection where T : Entity
+    public abstract class CachedTransactionalEntityCollection<T, TId> : ICollection where T : Entity
     {
-        protected readonly Dictionary<TId, WeakReference> ObjectTable = new Dictionary<TId, WeakReference>();
+        protected readonly Dictionary<TId, TransactionalEntity<T>> ObjectTable = new Dictionary<TId, TransactionalEntity<T>>();
         protected readonly EventLog Log = new EventLog("Application", ".", "Entity Repository");
+
+        // constructor of implemention must load all entities
+
+        public IList<T> GetEntityList()
+        {
+            return ObjectTable.Values.Select(v => v.GetEntity()).ToList();
+        }
+
+        public void Sync(TId id, bool delete = false)
+        {
+            if (delete)
+            {
+                if (ObjectTable.ContainsKey(id)) ObjectTable.Remove(id);
+            }
+            else
+            {
+                GetEntity(id, true);
+            }
+        }
 
         public virtual IList<Type> SupportedTypes()
         {
-            return new List<Type> {typeof (T)};
+            return new List<Type> { typeof(T) };
         }
 
         public virtual object GetEntity(object id, bool reload = false)
         {
             if (id == null) throw new ArgumentException("Object's Id is null.");
             if (id.GetType() != typeof(TId)) throw new ArgumentException("Object's Id's type mismatch.");
-            var objId = (TId) id;
-
+            var objId = (TId)id;
             try
             {
                 if (ObjectTable.ContainsKey(objId))
                 {
-                    var reference1 = ObjectTable[objId];
-                    if (reference1.Target != null)
-                    {
-                        if (!reload) return reference1.Target;
-                        var entity1 = GetEntityImpl(objId);
-                        ((TransactionalEntity<T>)reference1.Target).SetEntity(entity1);
-                        return reference1.Target;
-                    }
-                    ObjectTable.Remove(objId);
+                    var obj = ObjectTable[objId];
+                    if (!reload) return obj;
+                    // reload entity
+                    var entity = GetEntityImpl(objId);
+                    // if cached then update entity, else remove from cache
+                    if (IsCached(entity))
+                        obj.SetEntity(entity);
+                    else
+                        ObjectTable.Remove(objId);
+                    return obj;
                 }
-                var entity = GetEntityImpl(objId);
-                var obj = new TransactionalEntity<T>(entity);
-                var reference = new WeakReference(obj);
-                ObjectTable.Add(objId, reference);
-                return obj;
+                else
+                {
+                    var entity = GetEntityImpl(objId);
+                    var obj = new TransactionalEntity<T>(entity);
+                    if (IsCached(entity)) ObjectTable.Add(objId, obj);
+                    return obj;
+                }
             }
             catch (Exception e)
             {
@@ -54,10 +75,10 @@ namespace EntityRepository
         {
             if (obj.GetType() != typeof(TransactionalEntity<T>)) throw new ArgumentException("Object's type mismatch.");
             var entity = ((TransactionalEntity<T>) obj).GetValue();
-            var id = (TId) entity.Id;
+            var id = (TId)entity.Id;
+            var isCached = IsCached(entity);
             if (ObjectTable.ContainsKey(id)) throw new ArgumentException($"Duplicate object Id: {id}.");
-            var reference = new WeakReference(obj);
-            ObjectTable.Add(id, reference);
+            if (isCached) ObjectTable.Add(id, (TransactionalEntity<T>) obj);
             try
             {
                 InsertEntityImpl(entity);
@@ -77,11 +98,14 @@ namespace EntityRepository
             if (obj.GetType() != typeof(TransactionalEntity<T>)) throw new ArgumentException("Object's type mismatch.");
             var entity = ((TransactionalEntity<T>)obj).GetValue();
             var id = (TId)entity.Id;
-            if (!ObjectTable.ContainsKey(id))
+            var isCached = IsCached(entity);
+            // if entity is valid and not in colection, add it
+            if (!ObjectTable.ContainsKey(id) && isCached)
             {
-                var reference = new WeakReference(obj);
-                ObjectTable.Add(id, reference);
+                ObjectTable.Add(id, (TransactionalEntity<T>) obj);
             }
+            // if entity is not valid remove it from collection
+            if (!isCached) ObjectTable.Remove(id);
             try
             {
                 UpdateEntityImpl(entity);
@@ -94,6 +118,8 @@ namespace EntityRepository
             }
         }
 
+        // check entity should keep in collection or not
+        protected abstract bool IsCached(T entity);
         protected abstract void UpdateEntityImpl(T entity);
 
         public virtual void DeleteEntity(object obj)
@@ -118,11 +144,6 @@ namespace EntityRepository
 
         public virtual void RemoveReclaimedObjects()
         {
-            var toRemove = (from item in ObjectTable where item.Value.Target == null select item.Key).ToList();
-            foreach (var guid in toRemove)
-            {
-                ObjectTable.Remove(guid);
-            }
         }
 
         public virtual void RegisterReference(IReference reference) { }
@@ -136,8 +157,7 @@ namespace EntityRepository
         {
             try
             {
-                RemoveReclaimedObjects();
-                return GetAllEntitiesImpl();
+                return (IList<object>) ObjectTable.Values.ToList();
             }
             catch (Exception e)
             {
@@ -145,7 +165,5 @@ namespace EntityRepository
                 throw;
             }
         }
-
-        protected abstract IList<object> GetAllEntitiesImpl();
     }
 }

@@ -59,9 +59,13 @@ namespace WorkflowImpl
             return _workflows.Where(w => w.GetEntity().User.Equals(user)) as IList<TransactionalEntity<WorkflowContext>>;
         }
 
-        public static TransactionalEntity<WorkflowContext> Create(string user, string name)
+        public static TransactionalEntity<WorkflowContext> Create(string user, string name, string abortTask = null)
         {
-            var contextEntity = new WorkflowContext(Guid.NewGuid(), user, name);
+            if (!string.IsNullOrEmpty(abortTask))
+            {
+                if (TaskRepository.GetTask(abortTask) == null) throw new ArgumentException($"Abort Task {abortTask} not found.");
+            }
+            var contextEntity = new WorkflowContext(Guid.NewGuid(), user, name, abortTask);
             var context = new TransactionalEntity<WorkflowContext>(contextEntity);
             context.Update();
             _workflows.Add(context);
@@ -168,6 +172,13 @@ namespace WorkflowImpl
             var contextEntity = context.GetEntity();
             contextEntity.Deadline = contextEntity.Deadline.AddHours(1);
             context.Update(contextEntity);
+            if (contextEntity.AbortTask != null)
+            {
+                var abortTask = TaskRepository.GetTask(contextEntity.AbortTask);
+                if (abortTask == null) throw new ArgumentException($"Abort Task {contextEntity.AbortTask} not found.");
+                TaskRepository.ExecuteTask(contextEntity.AbortTask, contextEntity, null, null);
+                Done(context);
+            }
             var execRecords = contextEntity.ExecutionRecords;
             while (execRecords.Count > 0)
             {

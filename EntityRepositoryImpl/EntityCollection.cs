@@ -28,25 +28,24 @@ namespace EntityRepositoryImpl
             if (id is string) guid = new Guid((string)id);
             if (id is Guid) guid = (Guid)id;
             if (guid == Guid.Empty) throw new ArgumentException("Object's Id is empty.");
-            if (_objectTable.ContainsKey(guid))
-            {
-                var reference = _objectTable[guid];
-                if (reference.Target != null && !reload) return reference.Target;
-                _objectTable.Remove(guid);
-            }
             try
             {
-                var adapter = new EntityRepositoryTableAdapter();
-                if (TransactionScopeUtil.DbConnection != null && TransactionScopeUtil.DbConnection.State == ConnectionState.Open)
-                    adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
-                var tbl = adapter.GetEntity(guid);
-                if (tbl.Rows.Count == 0) throw new Exception($"Object Id: {id} not found.");
-                var row = tbl.Rows[0] as EntityRepository.EntityRepositoryRow;
-                if (row == null) throw new ArgumentException($"Object Id: {id} not found.");
-                var entityType = Type.GetType(row.Type);
-                if (entityType == null) throw new TypeAccessException($"Type {row.Type} not found.");
-                // Deserialize object value
-                var entity = JsonConvert.DeserializeObject(row.JSON, entityType);
+                if (_objectTable.ContainsKey(guid))
+                {
+                    var reference1 = _objectTable[guid];
+                    if (reference1.Target != null)
+                    {
+                        if (!reload) return reference1.Target;
+                        dynamic obj1 = reference1.Target;
+                        Type entityType1;
+                        var entity1 = EntityType(out entityType1, guid);
+                        obj1.SetEntity(entity1);
+                        return reference1.Target;
+                    }
+                    _objectTable.Remove(guid);
+                }
+                Type entityType;
+                var entity = EntityType(out entityType, guid);
                 var obj = TransactionalEntity.CreateTransactionalEntity(entityType, entity);
                 var reference = new WeakReference(obj);
                 _objectTable.Add(guid, reference);
@@ -57,6 +56,22 @@ namespace EntityRepositoryImpl
                 _log.WriteEntry($"Retrieve object failure ({guid}): {e.Message}", EventLogEntryType.Error);
                 throw;
             }
+        }
+
+        private static object EntityType(out Type entityType, Guid guid)
+        {
+            var adapter = new EntityRepositoryTableAdapter();
+            if (TransactionScopeUtil.DbConnection != null && TransactionScopeUtil.DbConnection.State == ConnectionState.Open)
+                adapter.Connection = TransactionScopeUtil.DbConnection as SqlConnection;
+            var tbl = adapter.GetEntity(guid);
+            if (tbl.Rows.Count == 0) throw new Exception($"Object Id: {guid} not found.");
+            var row = tbl.Rows[0] as EntityRepository.EntityRepositoryRow;
+            if (row == null) throw new ArgumentException($"Object Id: {guid} not found.");
+            entityType = Type.GetType(row.Type);
+            if (entityType == null) throw new TypeAccessException($"Type {row.Type} not found.");
+            // Deserialize object value
+            var entity = JsonConvert.DeserializeObject(row.JSON, entityType);
+            return entity;
         }
 
         public void InsertEntity(object obj)

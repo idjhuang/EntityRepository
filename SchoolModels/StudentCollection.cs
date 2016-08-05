@@ -11,7 +11,7 @@ namespace SchoolModels
 {
     public class StudentCollection : TransactionalEntityCollection<Student, string>
     {
-        protected override TransactionalEntity<Student> GetEntityImpl(string id)
+        protected override Student GetEntityImpl(string id)
         {
             var studentTableAdapter = new StudentTableAdapter();
             var scoreTableAdapter = new ScoreTableAdapter();
@@ -36,7 +36,7 @@ namespace SchoolModels
             // set reference as unloaded state by specific constructor
             student.Courses = new TransactionalEntityList<Course>(courseList);
             student.Scores = new TransactionalEntityList<Score>(scoreList);
-            return new TransactionalEntity<Student>(student);
+            return student;
         }
 
         protected override void InsertEntityImpl(Student entity)

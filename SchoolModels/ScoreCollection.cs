@@ -11,7 +11,7 @@ namespace SchoolModels
 {
     public class ScoreCollection : TransactionalEntityCollection<Score, ScoreId>
     {
-        protected override TransactionalEntity<Score> GetEntityImpl(ScoreId id)
+        protected override Score GetEntityImpl(ScoreId id)
         {
             var scoreTableAdapter = new ScoreTableAdapter();
             if (TransactionScopeUtil.DbConnection != null && TransactionScopeUtil.DbConnection.State == ConnectionState.Open)
@@ -25,7 +25,7 @@ namespace SchoolModels
             {
                 FinalScore = scoreRow.FinalScore
             };
-            return new TransactionalEntity<Score>(score);
+            return score;
         }
 
         protected override void InsertEntityImpl(Score entity)
