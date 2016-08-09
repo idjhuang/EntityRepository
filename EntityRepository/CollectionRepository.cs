@@ -42,6 +42,7 @@ namespace EntityRepository
 
         public static ICollection GetCollection(Type type)
         {
+            if (type == null) throw new ArgumentException("Invalid type.");
             // return default collection implementation when type not found in collection table
             return Collections.ContainsKey(type) ? Collections[type] : Collections[typeof(object)];
         }

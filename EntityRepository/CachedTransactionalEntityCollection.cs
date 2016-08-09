@@ -2,23 +2,45 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using ObjectResourceManager;
 
 namespace EntityRepository
 {
-    public abstract class CachedTransactionalEntityCollection<T, TId> : ICollection where T : Entity
+    public abstract class CachedTransactionalEntityCollection<T, TId> : ICollection, ICachedCollection where T : Entity
     {
         protected readonly Dictionary<TId, TransactionalEntity<T>> ObjectTable = new Dictionary<TId, TransactionalEntity<T>>();
         protected readonly EventLog Log = new EventLog("Application", ".", "Entity Repository");
 
-        // constructor of implemention must load all entities
+        protected CachedTransactionalEntityCollection()
+        {
+            ((ICachedCollection) this).SyncAll();
+        }
 
         public IList<T> GetEntityList()
         {
-            return ObjectTable.Values.Select(v => v.GetEntity()).ToList();
+            return ObjectTable.Values.Select(v => v.GetEntity(LockMode.NoLock)).ToList();
         }
 
-        public void Sync(TId id, bool delete = false)
+        void ICachedCollection.SyncAll()
         {
+            var entityList = ReterieveFromDatabase();
+            // remove all deleted entities
+            foreach (var entity in ObjectTable.Values.Select(v => v.GetEntity(LockMode.NoLock)).ToList().Where(entity => !entityList.Contains(entity)))
+            {
+                ObjectTable.Remove((TId) entity.Id);
+            }
+            // add all inserted entities
+            foreach (var entity in entityList.Where(entity => !ObjectTable.ContainsKey((TId) entity.Id)))
+            {
+                ObjectTable.Add((TId) entity.Id, new TransactionalEntity<T>(entity));
+            }
+        }
+
+        protected abstract IList<T> ReterieveFromDatabase();
+
+        void ICachedCollection.Sync(List<string> idList, bool delete)
+        {
+            var id = ConvertId(idList);
             if (delete)
             {
                 if (ObjectTable.ContainsKey(id)) ObjectTable.Remove(id);
@@ -28,6 +50,8 @@ namespace EntityRepository
                 GetEntity(id, true);
             }
         }
+
+        protected abstract TId ConvertId(List<string> idList);
 
         public virtual IList<Type> SupportedTypes()
         {
@@ -144,6 +168,11 @@ namespace EntityRepository
 
         public virtual void RemoveReclaimedObjects()
         {
+            var entityList = ObjectTable.Values.Select(v => v.GetEntity(LockMode.NoLock)).ToList();
+            foreach (var entity in entityList.Where(entity => !IsCached(entity)))
+            {
+                ObjectTable.Remove((TId) entity.Id);
+            }
         }
 
         public virtual void RegisterReference(IReference reference) { }
@@ -157,7 +186,7 @@ namespace EntityRepository
         {
             try
             {
-                return (IList<object>) ObjectTable.Values.ToList();
+                return ObjectTable.Values.ToList().Cast<object>().ToList();
             }
             catch (Exception e)
             {
